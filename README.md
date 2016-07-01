@@ -1,2 +1,3 @@
-# irc
-Internet Relay Chat Protocol client library
+#Internet Relay Chat (IRC) Protocol client library
+
+Currently not in development
