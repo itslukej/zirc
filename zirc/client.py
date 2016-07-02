@@ -36,11 +36,11 @@ class Client(object):
                 event = Event(query)
                 if event.type == "PING":
                     self.send("PONG :{0}".format(" ".join(event.arguments)))
+                if hasattr(self, "on_all"):
+                    self.on_all(event)
                 func_name = "on_"+event.text_type.lower()
                 if hasattr(self, func_name):
                     getattr(self, func_name)(event)
-                if hasattr(self, "on_all"):
-                    self.on_all(event)
     #Basic client use
     def privmsg(self, channel, message):
         MSGLEN = 449 - len(channel)
