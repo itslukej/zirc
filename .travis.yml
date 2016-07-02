@@ -1,0 +1,16 @@
+language: python
+cache: pip
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "nightly"
+install:
+  - pip install .
+script: python tests/travis.py
+notifications:
+  email:
+    on_success: never
+    on_failure: always
