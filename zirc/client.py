@@ -1,11 +1,16 @@
 from .connection import Socket
 from .event import Event
+from .flood import floodProtect
+
+import sys
 
 class NoSocket(Exception):
     pass
 
 class Client(object):
     def connect(self, address, port, nickname, ident, realname, channels):
+        self.fp = floodProtect()
+        
         if not hasattr(self, "connection"):
             raise NoSocket("{0} has no attribute 'connection'".format(self))
         self.socket = self.connection((address, port))
@@ -23,7 +28,7 @@ class Client(object):
         self.data = self.data.strip().split("\r\n")
         return self.data
     def send(self, data):
-        self.socket.send("{0}\r\n".format(data).encode("UTF-8"))
+        self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
         while True:
             for query in self.recv():
@@ -37,6 +42,10 @@ class Client(object):
                     self.on_all(event)
     #Basic client use
     def privmsg(self, channel, message):
-        self.send("PRIVMSG {0} :{1}".format(channel, message))
+        MSGLEN = 449 - len(channel)
+        message_byte_count = sys.getsizeof(message)-37
+        strings = [message[i:i+MSGLEN] for i in range(0, message_byte_count, MSGLEN)]
+        for message in strings:
+            self.send("PRIVMSG {0} :{1}".format(channel, message))
     def reply(self, event, message):
         self.privmsg(event.target, message)

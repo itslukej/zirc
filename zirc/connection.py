@@ -18,5 +18,6 @@ class Socket(object):
         self.sock = self.wrapper(self.sock)
         self.bind_address and sock.bind(self.bind_address)
         self.sock.connect(socket_address)
+        
         return self.sock
     __call__ = connect
