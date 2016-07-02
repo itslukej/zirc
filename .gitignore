@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Cloud9 IDE - http://c9.io
+.c9revisions
+.c9
