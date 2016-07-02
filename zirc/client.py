@@ -2,7 +2,7 @@ from .connection import Socket
 from .event import Event
 from .flood import floodProtect
 
-import sys
+import sys,time
 
 class NoSocket(Exception):
     pass
@@ -16,6 +16,7 @@ class Client(object):
         self.socket = self.connection((address, port))
         self.send("NICK {0}".format(nickname))
         self.send("USER {0} * * :{1}".format(ident, realname))
+        time.sleep(5)
         for channel in channels:
             self.send("JOIN {0}".format(channel))
     def recv(self):
@@ -35,7 +36,7 @@ class Client(object):
                 event = Event(query)
                 if event.type == "PING":
                     self.send("PONG :{0}".format(" ".join(event.arguments)))
-                func_name = "on_"+event.type.lower()
+                func_name = "on_"+event.text_type.lower()
                 if hasattr(self, func_name):
                     getattr(self, func_name)(event)
                 if hasattr(self, "on_all"):
