@@ -3,7 +3,7 @@ import zirc, ssl, time, sys
 class Bot(zirc.Client):
     def __init__(self):
         self.connection = zirc.Socket(wrapper=ssl.wrap_socket)
-        self.connect(address="irc.stuxnet.xyz", port=6697, nickname="zIRC-CI-"+str(sys.version.split(" ")[0].replace(".", "-")), ident="ci", realname="zIRC IRCP Library", channels=[])
+        self.connect(address="irc.stuxnet.xyz", port=6697, nickname="zIRC-CI-"+str(sys.version.split(" ")[0].replace(".", "-").replace("+", "")), ident="ci", realname="zIRC IRCP Library", channels=[])
 
         self.start()
 
