@@ -5,8 +5,14 @@ class NoSocket(Exception):
     pass
 
 class Client(object):
-    def connect(self, address, port=6667):
+    def connect(self, address, port, nickname, ident, realname, channels):
+        if not hasattr(self, "connection"):
+            raise NoSocket("{0} has no attribute 'connection'".format(self))
         self.socket = self.connection((address, port))
+        self.send("NICK {0}".format(nickname))
+        self.send("USER {0} * * :{1}".format(ident, realname))
+        for channel in channels:
+            self.send("JOIN {0}".format(channel))
     def recv(self):
         self.part = ""
         self.data = ""
@@ -16,12 +22,21 @@ class Client(object):
             self.data += self.part
         self.data = self.data.strip().split("\r\n")
         return self.data
+    def send(self, data):
+        self.socket.send("{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
         while True:
             for query in self.recv():
                 event = Event(query)
+                if event.type == "PING":
+                    self.send("PONG :{0}".format(" ".join(event.arguments)))
                 func_name = "on_"+event.type.lower()
                 if hasattr(self, func_name):
                     getattr(self, func_name)(event)
                 if hasattr(self, "on_all"):
                     self.on_all(event)
+    #Basic client use
+    def privmsg(self, channel, message):
+        self.send("PRIVMSG {0} :{1}".format(channel, message))
+    def reply(self, event, message):
+        self.privmsg(event.target, message)

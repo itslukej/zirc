@@ -1,4 +1,7 @@
 import six
+import os, json
+
+irc_events = json.load(open(os.path.join(os.path.dirname(__file__), "resources", "events.json"), "r"))
 
 class Event(object):
 
@@ -22,6 +25,8 @@ class Event(object):
                 self.arguments.append(arg)
         if len(args) > 1:
             self.arguments.append(args[1])
+            
+        self.text_type = irc_events.get(self.type, self.type).upper()
 
     def __str__(self):
         tmpl = (
@@ -29,7 +34,8 @@ class Event(object):
             "source: {source}, "
             "target: {target}, "
             "arguments: {arguments}, "
-            "raw: {raw}"
+            "raw: {raw}, "
+            "text_type: {text_type}"
         )
         return tmpl.format(**vars(self))
 
