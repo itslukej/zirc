@@ -10,7 +10,7 @@ class NoSocket(Exception):
 class Client(object):
     def connect(self, address, port, nickname, ident, realname, channels):
         self.fp = floodProtect()
-        
+
         if not hasattr(self, "connection"):
             raise NoSocket("{0} has no attribute 'connection'".format(self))
         self.socket = self.connection((address, port))
@@ -23,8 +23,7 @@ class Client(object):
         self.part = ""
         self.data = ""
         while not self.part.endswith("\r\n"):
-            self.part = self.socket.recv(2048)
-            self.part = self.part.decode("UTF-8", "ignore")
+            self.part = self.socket.recv(2048).decode("utf-8", errors="replace")
             self.data += self.part
         self.data = self.data.strip().split("\r\n")
         return self.data

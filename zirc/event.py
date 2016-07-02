@@ -25,7 +25,7 @@ class Event(object):
                 self.arguments.append(arg)
         if len(args) > 1:
             self.arguments.append(args[1])
-            
+    
         self.text_type = irc_events.get(self.type, self.type).upper()
 
     def __str__(self):
