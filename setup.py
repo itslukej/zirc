@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='zirc',
-      version='0.0.2',
+      version='0.0.1',
       description="Python IRCP Library",
       url='https://github.com/itslukej/zirc',
       author='Luke J.',
