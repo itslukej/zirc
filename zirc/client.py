@@ -29,6 +29,8 @@ class Client(object):
         self.data = self.data.strip().split("\r\n")
         return self.data
     def send(self, data):
+        if hasattr(self, "on_send"):
+            self.on_send(irc, data)
         self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
         while True:
