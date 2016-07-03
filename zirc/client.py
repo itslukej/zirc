@@ -10,6 +10,8 @@ class NoSocket(Exception):
 
 class Client(object):
     def connect(self, address, port, nickname, ident, realname, channels, sasl_user=None, sasl_pass=None):
+        self.channels = channels
+        
         self.fp = floodProtect()
         if not hasattr(self, "connection"):
             raise NoSocket("{0} has no attribute 'connection'".format(self))
@@ -30,7 +32,7 @@ class Client(object):
         return self.data
     def send(self, data):
         if hasattr(self, "on_send"):
-            self.on_send(irc, data)
+            self.on_send(data)
         self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
         while True:
@@ -38,6 +40,9 @@ class Client(object):
                 event = Event(query)
                 if event.type == "PING":
                     self.send("PONG :{0}".format(" ".join(event.arguments)))
+                if event.type == "001":
+                    for channel in self.channels:
+                        self.send("JOIN {0}".format(channel))
                 if hasattr(self, "on_all"):
                     self.on_all(event)
                 func_name = "on_"+event.text_type.lower()
