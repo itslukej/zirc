@@ -6,7 +6,7 @@ irc_events = json.load(open(os.path.join(os.path.dirname(__file__), "resources",
 class Event(object):
 
     def __init__(self, raw):
-        self.raw = raw
+        self.raw = ''.join([i if ord(i) < 128 else ' ' for i in raw])
         if raw.startswith(":"):
             raw = raw.replace(":", "", 1)
             if len(raw.split(" ", 3)) > 3:
@@ -38,6 +38,7 @@ class Event(object):
             "text_type: {text_type}"
         )
         return tmpl.format(**vars(self))
+    __repr__ = __str__
 
 class NickMask(six.text_type):
     @classmethod

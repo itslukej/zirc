@@ -1,6 +1,7 @@
 from .connection import Socket
 from .event import Event
 from .flood import floodProtect
+from base64 import b64encode
 
 import sys,time
 
@@ -8,17 +9,17 @@ class NoSocket(Exception):
     pass
 
 class Client(object):
-    def connect(self, address, port, nickname, ident, realname, channels):
+    def connect(self, address, port, nickname, ident, realname, channels, sasl_user=None, sasl_pass=None):
         self.fp = floodProtect()
-
         if not hasattr(self, "connection"):
             raise NoSocket("{0} has no attribute 'connection'".format(self))
         self.socket = self.connection((address, port))
+        if sasl_pass is not None and sasl_user is not None:
+            self.sasl_user = sasl_user
+            self.sasl_pass = sasl_pass
+            self.do_sasl()
         self.send("NICK {0}".format(nickname))
         self.send("USER {0} * * :{1}".format(ident, realname))
-        time.sleep(5)
-        for channel in channels:
-            self.send("JOIN {0}".format(channel))
     def recv(self):
         self.part = ""
         self.data = ""
@@ -49,3 +50,28 @@ class Client(object):
             self.send("PRIVMSG {0} :{1}".format(channel, message))
     def reply(self, event, message):
         self.privmsg(event.target, message)
+    #SASL Auth
+    def do_sasl(self):
+        self.send("CAP REQ :sasl")
+        while True:
+            for line in self.recv():
+                line = line.split()
+                if line[0] == "AUTHENTICATE":
+                    if line[1] == "+":
+                        saslstring = b64encode("{0}\x00{0}\x00{1}".format(
+                                        self.sasl_user,
+                                        self.sasl_pass).encode("UTF-8"))
+                        self.send("AUTHENTICATE {0}".format(saslstring.decode("UTF-8")))
+                elif line[1] == "CAP":
+                    if line[3] == "ACK":
+                        line[4] = line[4].strip(":")
+                        caps = line[4:]
+                        if "sasl" in caps:
+                            self.send("AUTHENTICATE PLAIN")
+                elif line[1] == "903":
+                    self.send("CAP END")
+                    return True
+                elif line[1] == "904" or line[1] == "905" or line[1] == "906":
+                    error = " ".join(line[2:]).strip(":")
+                    self.send("QUIT :[ERROR] {0}".format(error))
+                    raise SASLError(error)
