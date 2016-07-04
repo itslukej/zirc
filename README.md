@@ -15,3 +15,35 @@ class Bot(zirc.Client):
 
 Bot()
 ```
+
+This library provides a implementation of the IRC protocol, It provides a event-driven IRC Protocol framework.
+
+#Installation
+
+Installing from pypi:
+
+```
+sudo pip install zirc
+sudo pip3 install zirc
+```
+
+Installing from github:
+
+```
+sudo pip install git+https://github.com/itslukej/zirc.git
+sudo pip3 install git+https://github.com/itslukej/zirc.git
+```
+
+#Features
+
+- Automatic PING/PONG between the server
+- IRC Message parsing
+- A simple set up and connection method
+- Easy installation
+
+#TODO
+
+- CTCP Support
+- Threaded Plugins
+- More documentation
+- Function arguments like "chan", "nick"
