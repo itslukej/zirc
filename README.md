@@ -47,3 +47,14 @@ sudo pip3 install git+https://github.com/itslukej/zirc.git
 - Threaded Plugins
 - More documentation
 - Function arguments like "chan", "nick"
+
+
+##Using IPv6
+
+To use IPv6 with `zirc.Socket`, you can use the family `socket.AF_INET6`:
+
+```
+import socket
+
+self.connection = zirc.Socket(family=socket.AF_INET6)
+```
