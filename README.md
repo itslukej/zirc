@@ -58,3 +58,7 @@ import socket
 
 self.connection = zirc.Socket(family=socket.AF_INET6)
 ```
+
+##Ideas
+
+- Multiple connection support
