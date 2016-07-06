@@ -6,7 +6,14 @@ import zirc, ssl
 class Bot(zirc.Client):
     def __init__(self):
         self.connection = zirc.Socket(wrapper=ssl.wrap_socket)
-        self.connect(address="irc.freenode.net", port=6697, nickname="zirctest", ident="bot", realname="test bot", channels=["#ezzybot"])
+        self.connect(address="irc.freenode.net", 
+            port=6697,
+            nickname="zirctest",
+            ident="bot",
+            realname="test bot",
+            channels=["##chat"],
+            sasl_user="NickServ_Username",
+            sasl_pass="NickServ_Password")
         
         self.start()
         
