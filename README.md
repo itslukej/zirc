@@ -1,5 +1,6 @@
 #Internet Relay Chat (IRC) Protocol client library
 
+###Example
 ```
 import zirc, ssl
 
@@ -27,7 +28,7 @@ This library provides a implementation of the IRC protocol, It provides a event-
 
 #Installation
 
-Installing from pypi:
+Installing from PyPi:
 
 ```
 sudo pip install zirc
@@ -40,6 +41,8 @@ Installing from github:
 sudo pip install git+https://github.com/itslukej/zirc.git
 sudo pip3 install git+https://github.com/itslukej/zirc.git
 ```
+
+Installing from github will usually have more bug fixes but may contain "bad quality" code.
 
 #Features
 
@@ -69,3 +72,7 @@ self.connection = zirc.Socket(family=socket.AF_INET6)
 ##Ideas
 
 - Multiple connection support
+
+#Contributing
+
+Please discuss code changes that significantly affect client use of the library before merging to the master branch. Please change the version in `setup.py` ahead if the change should be uploaded to PyPi.
