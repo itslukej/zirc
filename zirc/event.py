@@ -31,11 +31,11 @@ class Event(object):
     def __str__(self):
         tmpl = (
             "type: {type}, "
+            "text_type: {text_type}, "
             "source: {source}, "
             "target: {target}, "
             "arguments: {arguments}, "
-            "raw: {raw}, "
-            "text_type: {text_type}"
+            "raw: {raw} "
         )
         return tmpl.format(**vars(self))
     __repr__ = __str__
