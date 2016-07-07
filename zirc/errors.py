@@ -1,5 +1,5 @@
-import sys
-if sys.version_info > (2,7):
+import sys as _sys
+if _sys.version_info > (2,7):
     class ConnectionError(OSError):
         pass
 
