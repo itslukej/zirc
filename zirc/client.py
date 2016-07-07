@@ -45,9 +45,13 @@ class Client(object):
                         self.send("JOIN {0}".format(channel))
                 if hasattr(self, "on_all"):
                     self.on_all(event)
-                func_name = "on_"+event.text_type.lower()
-                if hasattr(self, func_name):
-                    getattr(self, func_name)(event)
+                text_type_func_name = "on_"+event.text_type.lower()
+                if hasattr(self, text_type_func_name):
+                    getattr(self, text_type_func_name)(event)
+                raw_type_func_name = "on_"+event.type.lower()
+                if raw_type_func_name != text_type_func_name:
+                    if hasattr(self, raw_type_func_name):
+                        getattr(self, raw_type_func_name)(event)
     #Basic client use
     def privmsg(self, channel, message):
         MSGLEN = 449 - len(channel)
