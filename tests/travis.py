@@ -17,7 +17,7 @@ class Bot(zirc.Client):
         time.sleep(1)
         irc.send("QUIT :My work here is done")
         time.sleep(1)
-        exit()
+        sys.exit()
 
     def on_all(irc, event):
         print(event)
