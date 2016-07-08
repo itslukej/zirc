@@ -10,7 +10,7 @@ class Socket(object):
         address = ("irc.stuxnet.xyz", 6697)
         Socket(wrapper=ssl.wrap_socket, family=socket.AF_INET6)(address)
     """
-    def __init__(self, wrapper=same, family=socket.AF_INET, socket_class=socket.socket, bind_address=None):
+    def __init__(self, wrapper=same, family=socket.AF_INET, bind_address=None):
         self.sock = socket.socket(family, socket.SOCK_STREAM)
         self.bind_address = bind_address
         self.wrapper = wrapper
