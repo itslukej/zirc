@@ -4,6 +4,7 @@ from .flood import floodProtect
 from base64 import b64encode
 
 from .errors import *
+from . import util
 
 import sys,time
 
@@ -40,20 +41,24 @@ class Client(object):
         while True:
             for query in self.recv():
                 event = Event(query)
+                args = {"event": event, "irc": self}
                 if event.type == "PING":
                     self.send("PONG :{0}".format(" ".join(event.arguments)))
                 if event.type == "001":
                     for channel in self.channels:
                         self.send("JOIN {0}".format(channel))
+
                 if hasattr(self, "on_all"):
-                    self.on_all(event)
+                    util.function_argument_call(self.on_all, args)()
+
                 text_type_func_name = "on_"+event.text_type.lower()
                 if hasattr(self, text_type_func_name):
-                    getattr(self, text_type_func_name)(event)
+                    util.function_argument_call(getattr(self, text_type_func_name), args)()
+
                 raw_type_func_name = "on_"+event.type.lower()
                 if raw_type_func_name != text_type_func_name:
                     if hasattr(self, raw_type_func_name):
-                        getattr(self, raw_type_func_name)(event)
+                        util.function_argument_call(getattr(self, raw_type_func_name), args)()
     #Basic client use
     def privmsg(self, channel, message):
         MSGLEN = 449 - len(channel)
