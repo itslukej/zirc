@@ -44,7 +44,7 @@ class Client(object):
                 args = {"event": event, "irc": self}
                 
                 #add arguments from event, for easier access
-                args = dict(args.items() + {k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")}.items())
+                args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
 
                 if event.type == "PING":
                     self.send("PONG :{0}".format(" ".join(event.arguments)))
