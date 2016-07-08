@@ -1,4 +1,4 @@
-import zirc, ssl, time, sys
+import zirc, ssl, time, sys, os
 
 class Bot(zirc.Client):
     def __init__(self):
@@ -17,7 +17,7 @@ class Bot(zirc.Client):
         time.sleep(1)
         irc.send("QUIT :My work here is done")
         time.sleep(1)
-        sys.exit()
+        os._exit(1)
 
     def on_all(irc, event):
         print(event)
