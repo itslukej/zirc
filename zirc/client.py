@@ -3,6 +3,8 @@ from .event import Event
 from .flood import floodProtect
 from base64 import b64encode
 
+from .errors import *
+
 import sys,time
 
 class NoSocket(Exception):
