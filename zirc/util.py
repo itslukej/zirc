@@ -1,4 +1,4 @@
-import inspect
+import inspect, threading
 
 def function_argument_call(func, arguments):
     accepts = inspect.getargspec(func)[0]
@@ -11,4 +11,6 @@ def function_argument_call(func, arguments):
         else:
             x[arg] = None
     call_func = lambda: func(**x)
-    return call_func
+    thread = threading.Thread(target=call_func)
+    thread.daemon = True
+    return thread.start
