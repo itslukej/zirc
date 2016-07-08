@@ -7,9 +7,6 @@ class Bot(zirc.Client):
 
         self.start()
 
-    def on_join(irc, event):
-        irc.reply(event, "It works!")
-
     def on_welcome(irc, event):
         irc.send("JOIN #zirc")
         time.sleep(1)
