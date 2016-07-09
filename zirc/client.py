@@ -46,8 +46,6 @@ class Client(object):
                 #add arguments from event, for easier access
                 args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
 
-                if event.type == "PING":
-                    self.send("PONG :{0}".format(" ".join(event.arguments)))
                 if event.type == "001":
                     for channel in self.channels:
                         self.send("JOIN {0}".format(channel))
@@ -63,6 +61,9 @@ class Client(object):
                 if raw_type_func_name != text_type_func_name:
                     if hasattr(self, raw_type_func_name):
                         util.function_argument_call(getattr(self, raw_type_func_name), args)()
+                        
+                if event.type == "PING":
+                    self.send("PONG :{0}".format(" ".join(event.arguments)))
     #Basic client use
     def privmsg(self, channel, message):
         MSGLEN = 449 - len(channel)
