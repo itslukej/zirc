@@ -8,9 +8,6 @@ from . import util
 
 import sys,time
 
-class NoSocket(Exception):
-    pass
-
 class Client(object):
     def connect(self, address, port, nickname, ident, realname, channels, sasl_user=None, sasl_pass=None):
         self.channels = channels

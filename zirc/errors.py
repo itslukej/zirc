@@ -8,3 +8,6 @@ class IRCError(ConnectionError):
 
 class SASLError(IRCError):
     pass
+
+class NoSocket(IRCError):
+    pass
