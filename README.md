@@ -50,10 +50,10 @@ Installing from github will usually have more bug fixes but may contain "bad qua
 - IRC Message parsing
 - A simple set up and connection method
 - Easy installation
+- Easy CTCP Set-up
 
 #TODO
 
-- CTCP Support
 - Threaded Plugins
 - More documentation
 - Function arguments like "chan", "nick"
