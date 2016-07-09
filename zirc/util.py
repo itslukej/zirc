@@ -5,11 +5,8 @@ def function_argument_call(func, arguments):
     x = {}
     for val, arg in enumerate(accepts):
         if val == 0 and inspect.ismethod(func):
-            continue #Ingnore first argument if it is a ismethod
-        if arg in arguments.keys():
-            x[arg] = arguments[arg]
-        else:
-            x[arg] = None
+            continue #Ingnore first argument if it is a method
+        x[arg] = arguments.get(arg, None)
     #call_func = lambda: func(**x)
     thread = threading.Thread(target=func, kwargs=x)
     thread.daemon = True
