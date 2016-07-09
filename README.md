@@ -54,9 +54,7 @@ Installing from github will usually have more bug fixes but may contain "bad qua
 
 #TODO
 
-- Threaded Plugins
 - More documentation
-- Function arguments like "chan", "nick"
 
 
 #Using IPv6
