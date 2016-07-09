@@ -10,7 +10,7 @@ def function_argument_call(func, arguments):
             x[arg] = arguments[arg]
         else:
             x[arg] = None
-    call_func = lambda: func(**x)
-    thread = threading.Thread(target=call_func)
+    #call_func = lambda: func(**x)
+    thread = threading.Thread(target=func, kwargs=x)
     thread.daemon = True
     return thread.start
