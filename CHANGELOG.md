@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/itslukej/zirc/tree/HEAD)
-
-[Full Changelog](https://github.com/itslukej/zirc/compare/v1.0.1...HEAD)
+## [v1.0.2](https://github.com/itslukej/zirc/tree/v1.0.2) (2016-07-09)
+[Full Changelog](https://github.com/itslukej/zirc/compare/v1.0.1...v1.0.2)
 
 **Closed issues:**
 
