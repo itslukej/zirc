@@ -59,7 +59,7 @@ Installing from github will usually have more bug fixes but may contain "bad qua
 - Function arguments like "chan", "nick"
 
 
-##Using IPv6
+#Using IPv6
 
 To use IPv6 with `zirc.Socket`, you can use the family `socket.AF_INET6`:
 
@@ -69,7 +69,20 @@ import socket
 self.connection = zirc.Socket(family=socket.AF_INET6)
 ```
 
-##Ideas
+#Proxy use
+
+To use proxies with `zirc.Socket`, you can replace `self.connection`'s attribute `sock`:
+
+```
+import socks
+
+self.connection = zirc.Socket()
+self.connection.sock = socks.socksocket()
+self.connection.sock.set_proxy(socks.SOCKS5, "proxy_ip", 1080)
+```
+
+
+#Ideas
 
 - Multiple connection support
 
