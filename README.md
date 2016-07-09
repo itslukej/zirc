@@ -1,4 +1,4 @@
-#Internet Relay Chat (IRC) Protocol client library
+#Internet Relay Chat (IRC) Protocol client library [![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc)
 
 ###Example
 ```
