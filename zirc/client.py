@@ -5,6 +5,7 @@ from base64 import b64encode
 
 from .errors import *
 from . import util
+from .wrappers import connection_wrapper
 
 import sys,time
 
@@ -37,7 +38,7 @@ class Client(object):
         while True:
             for query in self.recv():
                 event = Event(query)
-                args = {"event": event, "irc": self}
+                args = {"event": event, "bot": self, "irc": connection_wrapper(self)}
                 
                 #add arguments from event, for easier access
                 args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
