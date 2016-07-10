@@ -1,7 +1,7 @@
 #Internet Relay Chat (IRC) Protocol client library [![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc)
 
 ###Example
-```
+```python
 import zirc, ssl
 
 class Bot(zirc.Client):
@@ -63,7 +63,7 @@ Installing from github will usually have more bug fixes but may contain "bad qua
 
 To use IPv6 with `zirc.Socket`, you can use the family `socket.AF_INET6`:
 
-```
+```python
 import socket
 
 self.connection = zirc.Socket(family=socket.AF_INET6)
@@ -73,7 +73,7 @@ self.connection = zirc.Socket(family=socket.AF_INET6)
 
 To use proxies with `zirc.Socket`, you can replace `self.connection`'s attribute `sock`:
 
-```
+```python
 import socks
 
 self.connection = zirc.Socket()
