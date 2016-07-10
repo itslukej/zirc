@@ -26,8 +26,8 @@ class Client(object):
     def recv(self):
         self.buffer= ""
         while not self.buffer.endswith("\r\n"):
-            self.buffer += self.socket.recv(2048)
-        self.buffer = self.buffer.decode("utf-8", errors="replace").strip().split("\r\n")
+            self.buffer += self.socket.recv(2048).decode("utf-8", errors="replace")
+        self.buffer = self.buffer.strip().split("\r\n")
         return self.buffer
     def send(self, data):
         if hasattr(self, "on_send"):
