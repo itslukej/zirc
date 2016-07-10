@@ -1,6 +1,6 @@
 #Internet Relay Chat (IRC) Protocol client library [![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc)
 
-###Example
+###Quick Start
 ```python
 import zirc, ssl
 
@@ -26,25 +26,25 @@ class Bot(zirc.Client):
 Bot()
 ```
 
-This library provides a implementation of the IRC protocol, It provides a event-driven IRC Protocol framework.
+This library implements IRC protocol, It's an event-driven IRC Protocol framework.
 
 #Installation
 
-Installing from PyPi:
+####PyPi
 
 ```
 sudo pip install zirc
 sudo pip3 install zirc
 ```
 
-Installing from github:
+####Github:
 
 ```
 sudo pip install git+https://github.com/itslukej/zirc.git
 sudo pip3 install git+https://github.com/itslukej/zirc.git
 ```
 
-Installing from github will usually have more bug fixes but may contain "bad quality" code.
+> Github will contain latest bug fixes and improvements but sometimes also "bad quality" code.
 
 #Features
 
@@ -54,12 +54,7 @@ Installing from github will usually have more bug fixes but may contain "bad qua
 - Easy installation
 - Easy CTCP Set-up
 
-#TODO
-
-- More documentation
-
-
-#Using IPv6
+#IPv6
 
 To use IPv6 with `zirc.Socket`, you can use the family `socket.AF_INET6`:
 
@@ -69,9 +64,9 @@ import socket
 self.connection = zirc.Socket(family=socket.AF_INET6)
 ```
 
-#Proxy use
+#Proxy
 
-To use proxies with `zirc.Socket`, you can replace `self.connection`'s attribute `sock`:
+Replace `self.connection`'s attribute `sock` to use a proxy with `zirc.Socket`:
 
 ```python
 import socks
@@ -86,6 +81,13 @@ self.connection.sock.set_proxy(socks.SOCKS5, "proxy_ip", 1080)
 
 - Multiple connection support
 
+#TODO
+
+- More documentation
+
+
 #Contributing
 
-Please discuss code changes that significantly affect client use of the library before merging to the master branch. Please change the version in `setup.py` ahead if the change should be uploaded to PyPi.
+> Talk to us on #zirc at Freenode
+
+Please discuss code changes that significantly affect client use of the library before merging to the master branch. Change the version in `setup.py` ahead if the change should be uploaded to PyPi.
