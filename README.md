@@ -18,8 +18,10 @@ class Bot(zirc.Client):
         
         self.start()
         
-    def on_privmsg(irc, event):
+    def on_privmsg(bot, event, irc):
         irc.reply(event, "It works!")
+        #Or alternatively:
+        #irc.privmsg(event.target, "It works!")
 
 Bot()
 ```
