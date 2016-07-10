@@ -1,12 +1,11 @@
 from .connection import Socket
 from .event import Event
 from .flood import floodProtect
-from base64 import b64encode
-
 from .errors import *
 from . import util
 from .wrappers import connection_wrapper
 
+from base64 import b64encode
 import sys,time
 
 class Client(object):
