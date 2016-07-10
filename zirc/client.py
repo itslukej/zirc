@@ -23,13 +23,11 @@ class Client(object):
         self.send("NICK {0}".format(nickname))
         self.send("USER {0} * * :{1}".format(ident, realname))
     def recv(self):
-        self.part = ""
-        self.data = ""
-        while not self.part.endswith("\r\n"):
-            self.part = self.socket.recv(2048).decode("utf-8", errors="replace")
-            self.data += self.part
-        self.data = self.data.strip().split("\r\n")
-        return self.data
+        self.buffer= ""
+        while not self.buffer.endswith("\r\n"):
+            self.buffer += self.socket.recv(2048)
+        self.buffer = self.buffer.decode("utf-8", errors="replace").strip().split("\r\n")
+        return self.buffer
     def send(self, data):
         if hasattr(self, "on_send"):
             self.on_send(data)
