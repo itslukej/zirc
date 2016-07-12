@@ -11,3 +11,6 @@ class SASLError(IRCError):
 
 class NoSocket(IRCError):
     pass
+
+class NoConfig(IRCError):
+    pass
