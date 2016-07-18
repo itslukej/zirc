@@ -1,0 +1,3 @@
+[submodule "zirc/packages/ConnectionMgr"]
+	path = zirc/packages/ConnectionMgr
+	url = https://github.com/itslukej/ConnectionMgr.git
