@@ -14,3 +14,11 @@ class NoSocket(IRCError):
 
 class NoConfig(IRCError):
     pass
+
+
+#test.py
+class TestError(Exception):
+    pass
+
+class InvalidLine(TestError):
+    pass
