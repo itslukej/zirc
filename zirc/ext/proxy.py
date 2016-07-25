@@ -14,4 +14,3 @@ class Proxy(socks.socksocket):
         self.protocol = protocol
     def __repr__(self):
         return "Proxy({0}, {1})".format(self.host, self.protocol)
-
