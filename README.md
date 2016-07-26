@@ -67,14 +67,12 @@ self.connection = zirc.Socket(family=socket.AF_INET6)
 
 #Proxy
 
-Replace `self.connection`'s attribute `sock` to use a proxy with `zirc.Socket`:
+Initialize `zirc.Socket` with argument `socket_class`:
 
 ```python
-import socks
+from zirc.ext import proxy
 
-self.connection = zirc.Socket()
-self.connection.sock = socks.socksocket()
-self.connection.sock.set_proxy(socks.SOCKS5, "proxy_ip", 1080)
+self.connection = zirc.Socket(socket_class=proxy.Proxy(host="localhost", port=1080, protocol=proxy.SOCKS5))
 ```
 
 
