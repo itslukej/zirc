@@ -8,6 +8,6 @@ setup(name='zirc',
       author_email='me+zirc@lukej.me',
       license='GNL',
       packages=["zirc"],
-      install_requires=['six'],
+      install_requires=['six', 'pysocks'],
       include_package_data=True,
       zip_safe=False)
