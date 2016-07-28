@@ -52,20 +52,15 @@ class Client(object):
         if event.type == "001":
             for channel in self._channels:
                 self.send("JOIN {0}".format(channel))
-    
-        if hasattr(self, "on_all"):
-            util.function_argument_call(self.on_all, args)()
-    
-        #e.g on_welcome
-        text_type_func_name = "on_"+event.text_type.lower()
-        if hasattr(self, text_type_func_name):
-            util.function_argument_call(getattr(self, text_type_func_name), args)()
-    
-        #e.g on_001
-        raw_type_func_name = "on_"+event.type.lower()
-        if raw_type_func_name != text_type_func_name:
-            if hasattr(self, raw_type_func_name):
-                util.function_argument_call(getattr(self, raw_type_func_name), args)()
+
+        to_call = ["on_all", "on_"+event.type.lower()]
+        if event.type != event.text_type:
+            to_call.append("on_"+event.text_type.lower())
+
+        for call_name in to_call:
+            if hasattr(self, call_name):
+                call_func = getattr(self, call_name)
+                util.function_argument_call(call_func, args)()
     
         if event.type == "PING":
             self.send("PONG :{0}".format(" ".join(event.arguments)))
