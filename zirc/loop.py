@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-class ClientLoop(object):
+class EventLoop(object):
     def __init__(self):
         self.jobs = OrderedDict()
         self.cycles = 0
