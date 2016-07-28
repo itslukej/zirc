@@ -1,7 +1,7 @@
 from .connection import Socket
 from .event import Event
 from .flood import floodProtect
-from .loop import Loop
+from .loop import EventLoop
 from .errors import *
 from . import util
 from .wrappers import connection_wrapper
@@ -39,7 +39,7 @@ class Client(object):
             self.on_send(data)
         self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
-        self.loop = Loop()
+        self.loop = EventLoop()
         self.loop.create_job("main", self.main_job)
         self.loop.run()
     def main_job(self):
