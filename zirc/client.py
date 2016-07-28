@@ -39,48 +39,46 @@ class Client(object):
             self.on_send(data)
         self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
-        self.loop = EventLoop()
+        self.loop = EventLoop(self.recv)
         self.loop.create_job("main", self.main_job)
         self.loop.run()
-    def main_job(self):
+    def main_job(self, event):
         """loop job to provide a event based system for clients."""
-        for query in self.recv():
-            event = Event(query)
-            args = {"event": event, "bot": self, "irc": connection_wrapper(self)}
-            
-            #add arguments from event, for easier access
-            args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
-
-            if event.type == "001":
-                for channel in self._channels:
-                    self.send("JOIN {0}".format(channel))
-
-            if hasattr(self, "on_all"):
-                util.function_argument_call(self.on_all, args)()
-
-            #e.g on_welcome
-            text_type_func_name = "on_"+event.text_type.lower()
-            if hasattr(self, text_type_func_name):
-                util.function_argument_call(getattr(self, text_type_func_name), args)()
-
-            #e.g on_001
-            raw_type_func_name = "on_"+event.type.lower()
-            if raw_type_func_name != text_type_func_name:
-                if hasattr(self, raw_type_func_name):
-                    util.function_argument_call(getattr(self, raw_type_func_name), args)()
-
-            if event.type == "PING":
-                self.send("PONG :{0}".format(" ".join(event.arguments)))
-
-            #CTCP Replies
-            if event.type == "PRIVMSG" and " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
-                ctcp_message = " ".join(event.arguments).replace("\x01", "").upper()
-                if ctcp_message in self.ctcp.keys():
-                    if callable(self.ctcp[ctcp_message]):
-                        result = self.ctcp[ctcp_message]()
-                    else:
-                        result = self.ctcp[ctcp_message]
-                    self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
+        args = {"event": event, "bot": self, "irc": connection_wrapper(self)}
+        
+        #add arguments from event, for easier access
+        args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
+    
+        if event.type == "001":
+            for channel in self._channels:
+                self.send("JOIN {0}".format(channel))
+    
+        if hasattr(self, "on_all"):
+            util.function_argument_call(self.on_all, args)()
+    
+        #e.g on_welcome
+        text_type_func_name = "on_"+event.text_type.lower()
+        if hasattr(self, text_type_func_name):
+            util.function_argument_call(getattr(self, text_type_func_name), args)()
+    
+        #e.g on_001
+        raw_type_func_name = "on_"+event.type.lower()
+        if raw_type_func_name != text_type_func_name:
+            if hasattr(self, raw_type_func_name):
+                util.function_argument_call(getattr(self, raw_type_func_name), args)()
+    
+        if event.type == "PING":
+            self.send("PONG :{0}".format(" ".join(event.arguments)))
+    
+        #CTCP Replies
+        if event.type == "PRIVMSG" and " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
+            ctcp_message = " ".join(event.arguments).replace("\x01", "").upper()
+            if ctcp_message in self.ctcp.keys():
+                if callable(self.ctcp[ctcp_message]):
+                    result = self.ctcp[ctcp_message]()
+                else:
+                    result = self.ctcp[ctcp_message]
+                self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
     #Basic client use
     def privmsg(self, channel, message):
         MSGLEN = 449 - len(channel)
