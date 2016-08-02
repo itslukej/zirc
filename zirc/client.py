@@ -28,6 +28,7 @@ class Client(object):
         self.send("USER {0} * * :{1}".format(self._config["ident"], self._config["realname"]))
         
         self._channels = self._config["channels"]
+        self.loop = EventLoop(self.recv)
     def recv(self):
         self.buffer= ""
         while not self.buffer.endswith("\r\n"):
@@ -39,7 +40,6 @@ class Client(object):
             self.on_send(data)
         self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
-        self.loop = EventLoop(self.recv)
         self.loop.create_job("main", self.main_job)
         self.loop.run()
     def main_job(self, event):
