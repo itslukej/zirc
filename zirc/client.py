@@ -44,7 +44,7 @@ class Client(object):
         self.loop.run()
     def main_job(self, event):
         """loop job to provide a event based system for clients."""
-        args = {"event": event, "bot": self, "irc": connection_wrapper(self)}
+        args = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]}
         
         #add arguments from event, for easier access
         args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
