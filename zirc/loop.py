@@ -9,8 +9,8 @@ class EventLoop(object):
         self.current_job = None
         self.break_loop = False
         self.recv_func = recv_func
-    def create_job(self, name, method):
-        self.jobs[name] = method
+    def create_job(self, name, method, do_thread=False):
+        self.jobs[name] = {"method": method, "thread": do_thread}
     def run(self):
         while True:
             for line in self.recv_func():
@@ -18,7 +18,7 @@ class EventLoop(object):
                     break
                 for name, method in self.jobs.items():
                     self.current_job = name
-                    util.function_argument_call(method, {"line": line, "event": Event(line)})()
+                    util.function_argument_call(method["method"], {"line": line, "event": Event(line)}, method["thread"])()
                     self.current_job = None
                 self.cycles += 1
     def join(self):
