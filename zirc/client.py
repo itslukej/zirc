@@ -76,11 +76,10 @@ class Client(object):
                 self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
     #Basic client use
     def privmsg(self, channel, message):
-        MSGLEN = 449 - len(channel)
-        message_byte_count = sys.getsizeof(message)-37
-        strings = [message[i:i+MSGLEN] for i in range(0, message_byte_count, MSGLEN)]
+        MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
+        strings = [message[i:i+MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
-            self.send("PRIVMSG {0} :{1}".format(channel, message))
+            self.send("PRIVMSG {0} :{1}".format(channel, message).encode())
     def reply(self, event, message):
         self.privmsg(event.target, message)
     #SASL Auth
