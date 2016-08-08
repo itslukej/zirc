@@ -79,7 +79,7 @@ class Client(object):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
         strings = [message[i:i+MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
-            self.send("PRIVMSG {0} :{1}".format(channel, message).encode())
+            self.send("PRIVMSG {0} :{1}".format(channel, message))
     def reply(self, event, message):
         self.privmsg(event.target, message)
     #SASL Auth
