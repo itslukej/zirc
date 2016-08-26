@@ -158,5 +158,14 @@
     "491": "nooperhost",
     "492": "noservicehost",
     "501": "umodeunknownflag",
-    "502": "usersdontmatch"
+    "502": "usersdontmatch",
+    "900": "loggedin",
+    "901": "loggedout",
+    "902": "nicklocked",
+    "903": "saslsuccess",
+    "904": "saslfailed",
+    "905": "sasltoolong",
+    "906": "saslaborted",
+    "907": "saslalready",
+    "908": "saslmechanisms"
 }
