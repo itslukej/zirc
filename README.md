@@ -13,8 +13,7 @@ class Bot(zirc.Client):
             ident="bot",
             realname="test bot",
             channels=["##chat"],
-            sasl_user="NickServ_Username",
-            sasl_pass="NickServ_Password")
+            caps=zirc.Caps(zirc.Sasl(username="username", password="password")))
         
         self.connect(self.config)
         self.start()
@@ -70,9 +69,8 @@ self.connection = zirc.Socket(family=socket.AF_INET6)
 Initialize `zirc.Socket` with argument `socket_class`:
 
 ```python
-from zirc.ext import proxy
 
-self.connection = zirc.Socket(socket_class=proxy.Proxy(host="localhost", port=1080, protocol=proxy.SOCKS5))
+self.connection = zirc.Socket(socket_class=zirc.Proxy(host="localhost", port=1080, protocol=zirc.SOCKS5))
 ```
 
 

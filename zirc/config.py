@@ -1,3 +1,5 @@
+from .caps import Caps
+
 class IRCConfig(object):
     """
     Class for holding zIRC config infomation.
@@ -12,8 +14,7 @@ class IRCConfig(object):
                   "ident": "bot",
                   "realname": "zIRC Bot",
                   "channels": ["#zirc"],
-                  "sasl_user": None,
-                  "sasl_pass": None
+                  "caps": Caps()
                   }
         self.dict.update(c)
 

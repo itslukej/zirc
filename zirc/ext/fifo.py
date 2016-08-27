@@ -9,7 +9,7 @@ def fifo_while(send_function, name):
             if len(line) > 0:
                 send_function(line)
                 
-def fifo(send_function, name="fifo"):
+def Fifo(send_function, name="fifo"):
     thread = threading.Thread(target=fifo_while, args=(send_function, name))
     thread.daemon = True
     thread.start()

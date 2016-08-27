@@ -1,1 +1,1 @@
-from . import proxy
+from . import proxy, fifo
