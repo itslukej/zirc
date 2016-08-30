@@ -18,6 +18,9 @@ class Event(object):
         else:
             self.type, args = raw.split(" ", 1)
             self.source = self.target = None
+        if self.target:
+            if self.target.startswith(":"): # n!u@h NICK :nuh
+                self.target = self.target.replace(":", "", 1)
         self.arguments = []
         if args.startswith(":"):
             args = args.split(":", 1)
