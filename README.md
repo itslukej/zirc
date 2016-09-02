@@ -73,6 +73,10 @@ Initialize `zirc.Socket` with argument `socket_class`:
 self.connection = zirc.Socket(socket_class=zirc.Proxy(host="localhost", port=1080, protocol=zirc.SOCKS5))
 ```
 
+#Examples
+
+You can [find examples for zIRC by me and other users on CodeBottle](https://codebottle.io/?q=%22zirc%22)
+
 
 #Ideas
 
