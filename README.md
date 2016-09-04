@@ -1,4 +1,4 @@
-#Internet Relay Chat (IRC) Protocol client library [![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc)
+#Internet Relay Chat (IRC) Protocol client library [![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc) [![Snippets Count](https://codebottle.io/api/v1/embed/searchbadge.php?keywords=%22zirc%22&language=Python)](https://codebottle.io/?q=%22zirc%22)
 
 ###Quick Start
 ```python
