@@ -38,7 +38,8 @@ class Client(object):
     def send(self, data):
         if hasattr(self, "on_send"):
             self.on_send(data)
-        self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
+        if not data.find(self._config["nickname"]):
+            self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
         self.loop.create_job("main", self.main_job)
         self.loop.run()
