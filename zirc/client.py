@@ -38,8 +38,7 @@ class Client(object):
     def send(self, data):
         if hasattr(self, "on_send"):
             self.on_send(data)
-        if not data.find(self._config["nickname"]):
-            self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
+        self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
     def start(self):
         self.loop.create_job("main", self.main_job)
         self.loop.run()
@@ -92,6 +91,9 @@ class Client(object):
         for message in strings:
             self.send("PRIVMSG {0} :{1}".format(channel, message))
     def reply(self, event, message):
-        self.privmsg(event.target, message)
+        if event.target == self._config['nickname']:
+            self.privmsg(event.source.nick, message)
+        else:
+            self.privmsg(event.target, message)
     def listen(self, func, event_name):
         self.listeners.append((event_name.lower(), func))
