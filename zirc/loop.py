@@ -13,14 +13,17 @@ class EventLoop(object):
         self.jobs[name] = {"method": method, "thread": do_thread}
     def run(self):
         while True:
-            for line in self.recv_func():
-                if self.break_loop:
-                    break
-                for name, method in self.jobs.items():
-                    self.current_job = name
-                    util.function_argument_call(method["method"], {"line": line, "event": Event(line)}, method["thread"])()
-                    self.current_job = None
-                self.cycles += 1
+            try:
+                for line in self.recv_func():
+                    if self.break_loop:
+                        break
+                    for name, method in self.jobs.items():
+                        self.current_job = name
+                        util.function_argument_call(method["method"], {"line": line, "event": Event(line)}, method["thread"])()
+                        self.current_job = None
+                    self.cycles += 1
+            except KeyboardInterrupt:
+                break
     def join(self):
         """returns None when the current job is complete"""
         while self.current_job is not None:
