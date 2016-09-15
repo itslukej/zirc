@@ -20,52 +20,57 @@
 
     <section class="main-content">
       <h1>
-<a id="internet-relay-chat-irc-protocol-client-library-" class="anchor" href="#internet-relay-chat-irc-protocol-client-library-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Internet Relay Chat (IRC) Protocol client library <a href="https://travis-ci.org/itslukej/zirc"><img src="https://travis-ci.org/itslukej/zirc.svg?branch=master" alt="Build Status"></a>
+<a id="internet-relay-chat-irc-protocol-client-library--" class="anchor" href="#internet-relay-chat-irc-protocol-client-library--" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Internet Relay Chat (IRC) Protocol client library <a href="https://travis-ci.org/itslukej/zirc"><img src="https://travis-ci.org/itslukej/zirc.svg?branch=master" alt="Build Status"></a> <a href="https://codebottle.io/?q=%22zirc%22"><img src="https://codebottle.io/api/v1/embed/searchbadge.php?keywords=%22zirc%22&amp;language=Python" alt="Snippets Count"></a>
 </h1>
 
 <h3>
-<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h3>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Start</h3>
 
-<pre><code>import zirc, ssl
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> zirc, ssl
 
-class Bot(zirc.Client):
-    def __init__(self):
-        self.connection = zirc.Socket(wrapper=ssl.wrap_socket)
-        self.connect(address="irc.freenode.net", 
-            port=6697,
-            nickname="zirctest",
-            ident="bot",
-            realname="test bot",
-            channels=["##chat"],
-            sasl_user="NickServ_Username",
-            sasl_pass="NickServ_Password")
+<span class="pl-k">class</span> <span class="pl-en">Bot</span>(<span class="pl-e">zirc</span>.<span class="pl-e">Client</span>):
+    <span class="pl-k">def</span> <span class="pl-c1">__init__</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>):
+        <span class="pl-v">self</span>.connection <span class="pl-k">=</span> zirc.Socket(<span class="pl-v">wrapper</span><span class="pl-k">=</span>ssl.wrap_socket)
+        <span class="pl-v">self</span>.config <span class="pl-k">=</span> zirc.IRCConfig(<span class="pl-v">host</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>irc.freenode.net<span class="pl-pds">"</span></span>, 
+            <span class="pl-v">port</span><span class="pl-k">=</span><span class="pl-c1">6697</span>,
+            <span class="pl-v">nickname</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>zirctest<span class="pl-pds">"</span></span>,
+            <span class="pl-v">ident</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>bot<span class="pl-pds">"</span></span>,
+            <span class="pl-v">realname</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>test bot<span class="pl-pds">"</span></span>,
+            <span class="pl-v">channels</span><span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">"</span>##chat<span class="pl-pds">"</span></span>],
+            <span class="pl-v">caps</span><span class="pl-k">=</span>zirc.Caps(zirc.Sasl(<span class="pl-v">username</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span>, <span class="pl-v">password</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>)))
 
-        self.start()
+        <span class="pl-v">self</span>.connect(<span class="pl-v">self</span>.config)
+        <span class="pl-v">self</span>.start()
 
-    def on_privmsg(irc, event):
-        irc.reply(event, "It works!")
+    <span class="pl-k">def</span> <span class="pl-en">on_privmsg</span>(<span class="pl-smi">bot</span>, <span class="pl-smi">event</span>, <span class="pl-smi">irc</span>):
+        irc.reply(event, <span class="pl-s"><span class="pl-pds">"</span>It works!<span class="pl-pds">"</span></span>)
+        <span class="pl-c">#Or alternatively:</span>
+        <span class="pl-c">#irc.privmsg(event.target, "It works!")</span>
 
-Bot()
-</code></pre>
+Bot()</pre></div>
 
-<p>This library provides a implementation of the IRC protocol, It provides a event-driven IRC Protocol framework.</p>
+<p>This library implements IRC protocol, It's an event-driven IRC Protocol framework.</p>
 
 <h1>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
-<p>Installing from PyPi:</p>
+<h4>
+<a id="pypi" class="anchor" href="#pypi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PyPi</h4>
 
 <pre><code>sudo pip install zirc
 sudo pip3 install zirc
 </code></pre>
 
-<p>Installing from github:</p>
+<h4>
+<a id="github" class="anchor" href="#github" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Github:</h4>
 
 <pre><code>sudo pip install git+https://github.com/itslukej/zirc.git
 sudo pip3 install git+https://github.com/itslukej/zirc.git
 </code></pre>
 
-<p>Installing from github will usually have more bug fixes but may contain "bad quality" code.</p>
+<blockquote>
+<p>Github will contain latest bug fixes and improvements but sometimes also "bad quality" code.</p>
+</blockquote>
 
 <h1>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h1>
@@ -75,39 +80,53 @@ sudo pip3 install git+https://github.com/itslukej/zirc.git
 <li>IRC Message parsing</li>
 <li>A simple set up and connection method</li>
 <li>Easy installation</li>
+<li>Easy CTCP Set-up</li>
 </ul>
 
 <h1>
-<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h1>
-
-<ul>
-<li>CTCP Support</li>
-<li>Threaded Plugins</li>
-<li>More documentation</li>
-<li>Function arguments like "chan", "nick"</li>
-</ul>
-
-<h2>
-<a id="using-ipv6" class="anchor" href="#using-ipv6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using IPv6</h2>
+<a id="ipv6" class="anchor" href="#ipv6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>IPv6</h1>
 
 <p>To use IPv6 with <code>zirc.Socket</code>, you can use the family <code>socket.AF_INET6</code>:</p>
 
-<pre><code>import socket
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> socket
 
-self.connection = zirc.Socket(family=socket.AF_INET6)
-</code></pre>
+<span class="pl-v">self</span>.connection <span class="pl-k">=</span> zirc.Socket(<span class="pl-v">family</span><span class="pl-k">=</span>socket.<span class="pl-c1">AF_INET6</span>)</pre></div>
 
-<h2>
-<a id="ideas" class="anchor" href="#ideas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ideas</h2>
+<h1>
+<a id="proxy" class="anchor" href="#proxy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Proxy</h1>
+
+<p>Initialize <code>zirc.Socket</code> with argument <code>socket_class</code>:</p>
+
+<div class="highlight highlight-source-python"><pre>
+<span class="pl-v">self</span>.connection <span class="pl-k">=</span> zirc.Socket(<span class="pl-v">socket_class</span><span class="pl-k">=</span>zirc.Proxy(<span class="pl-v">host</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>, <span class="pl-v">port</span><span class="pl-k">=</span><span class="pl-c1">1080</span>, <span class="pl-v">protocol</span><span class="pl-k">=</span>zirc.<span class="pl-c1">SOCKS5</span>))</pre></div>
+
+<h1>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h1>
+
+<p>You can <a href="https://codebottle.io/?q=%22zirc%22">find examples for zIRC by me and other users on CodeBottle</a></p>
+
+<h1>
+<a id="ideas" class="anchor" href="#ideas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ideas</h1>
 
 <ul>
 <li>Multiple connection support</li>
 </ul>
 
 <h1>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h1>
+
+<ul>
+<li>More documentation</li>
+</ul>
+
+<h1>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h1>
 
-<p>Please discuss code changes that significantly affect client use of the library before merging to the master branch. Please change the version in <code>setup.py</code> ahead if the change should be uploaded to PyPi.</p>
+<blockquote>
+<p>Talk to us on #zirc at Freenode</p>
+</blockquote>
+
+<p>Please discuss code changes that significantly affect client use of the library before merging to the master branch. Change the version in <code>setup.py</code> ahead if the change should be uploaded to PyPi.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/itslukej/zirc">zIRC</a> is maintained by <a href="https://github.com/itslukej">itslukej</a>.</span>
