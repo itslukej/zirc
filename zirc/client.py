@@ -23,6 +23,9 @@ class Client(object):
         self.socket = self.connection((self._config["host"], self._config["port"]))
 
         self._config["caps"](self)
+
+        if self._config.get("password"):
+            self.send("PASS {0}".format(self._config["password"]))
         
         self.send("NICK {0}".format(self._config["nickname"]))
         self.send("USER {0} * * :{1}".format(self._config["ident"], self._config["realname"]))
