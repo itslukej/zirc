@@ -26,3 +26,6 @@ class IRCConfig(object):
 
     def __setitem__(self, key, value):
         self.dict[key] = value
+
+    def get(self, key, default=None):
+        return self.dict.get(key, default)
