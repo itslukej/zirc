@@ -20,11 +20,11 @@ class connection_wrapper(object):
         self.send("INVITE {0} {1}".format(user, chan))
 
     def action(self, channel, message):
-        self.sendmsg(channel,"\x01ACTION " + message + "\x01")
+        self.sendmsg(channel,"\x01ACTION {0}\x01".format(message))
 
     def kick(self,channel, user, message):
         user = user.replace(" ","").replace(":","")
-        self.send("KICK " + channel + " " + user+ " :" + message)
+        self.send("KICK {0} {1} :{2}".format(user, channel, message))
 
     def op(self, channel, nick):
         self.send("MODE {0} +o {1}".format(channel, nick))
@@ -57,7 +57,7 @@ class connection_wrapper(object):
         self.send("NOTICE {0} :{1}".format(user, message))
 
     def quit(self, message=""):
-        self.send("QUIT :"+message)
+        self.send("QUIT : {0}".format(message))
     
     def ctcp(self, user, message):
         self.send("PRIVMSG {0} :\x01{1}\x01\x01".format(user, message))
