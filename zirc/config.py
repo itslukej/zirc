@@ -1,4 +1,4 @@
-from .caps import Caps
+#from .caps import Caps
 
 class IRCConfig(object):
     """
@@ -14,7 +14,7 @@ class IRCConfig(object):
                   "ident": "bot",
                   "realname": "zIRC Bot",
                   "channels": ["#zirc"],
-                  "caps": Caps()
+                  "caps": None
                   }
         self.dict.update(c)
 

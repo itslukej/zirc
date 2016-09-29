@@ -1,6 +1,4 @@
-import socket
-
-same = lambda x: x
+import socket, asyncio
 
 class Socket(object):
     """
@@ -8,19 +6,15 @@ class Socket(object):
     
     Creating a connection:
         address = ("irc.stuxnet.xyz", 6697)
-        Socket(wrapper=ssl.wrap_socket, family=socket.AF_INET6)(address)
+        Socket(ssl=True, family=socket.AF_INET6)(address)
     """
-    def __init__(self, wrapper=same, family=socket.AF_INET, socket_class=None, bind_address=None):
-        if socket_class is not None:
-            self.sock = socket_class(family, socket.SOCK_STREAM)
-        else:
-            self.sock = socket.socket(family, socket.SOCK_STREAM)
-        self.bind_address = bind_address
-        self.wrapper = wrapper
-    def connect(self, socket_address):
-        self.sock = self.wrapper(self.sock)
-        self.bind_address and sock.bind(self.bind_address)
-        self.sock.connect(socket_address)
-        
-        return self.sock
+    def __init__(self, family=socket.AF_INET, ssl=False):
+        self.family = family
+        self.ssl = ssl
+    async def connect(self, loop, address):
+        host = address[0]
+        port = address[1]
+
+        socket = await asyncio.open_connection(host=host, port=port, loop=loop, family=self.family, ssl=self.ssl)
+        return socket
     __call__ = connect

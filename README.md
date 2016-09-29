@@ -2,26 +2,24 @@
 
 ###Quick Start
 ```python
-import zirc, ssl
+import zirc
 
 class Bot(zirc.Client):
     def __init__(self):
-        self.connection = zirc.Socket(wrapper=ssl.wrap_socket)
+        zirc.Client.__init__(self)
+        self.connection = zirc.Socket(ssl=True)
         self.config = zirc.IRCConfig(host="irc.freenode.net", 
             port=6697,
             nickname="zirctest",
             ident="bot",
             realname="test bot",
-            channels=["##chat"],
-            caps=zirc.Caps(zirc.Sasl(username="username", password="password")))
+            channels=["#zirc"],
+            )
         
         self.connect(self.config)
-        self.start()
         
-    def on_privmsg(bot, event, irc):
-        irc.reply(event, "It works!")
-        #Or alternatively:
-        #irc.privmsg(event.target, "It works!")
+    async def on_privmsg(self, event):
+        await irc.reply(event, "It works!")
 
 Bot()
 ```
