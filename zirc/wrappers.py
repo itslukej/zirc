@@ -24,7 +24,7 @@ class connection_wrapper(object):
 
     def kick(self,channel, user, message):
         user = user.replace(" ","").replace(":","")
-        self.send("KICK {0} {1} :{2}".format(user, channel, message))
+        self.send("KICK {0} {1} :{2}".format(channel, user, message))
 
     def op(self, channel, nick):
         self.send("MODE {0} +o {1}".format(channel, nick))
