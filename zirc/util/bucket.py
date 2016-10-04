@@ -1,3 +1,5 @@
+from time import time
+
 class TokenBucket(object):
     """An implementation of the token bucket algorithm.
 

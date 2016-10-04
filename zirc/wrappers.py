@@ -1,9 +1,12 @@
+from time import time
+
 class connection_wrapper(object):
     def __init__(self, irc):
         self.send = irc.send
         self.reply = irc.reply
         self.msg = irc.privmsg
         self.privmsg = irc.privmsg
+
     def ping(self):
         self.send("PING :{}".format(str(int(time()))).encode('utf-8'))
 
@@ -20,10 +23,10 @@ class connection_wrapper(object):
         self.send("INVITE {0} {1}".format(user, chan))
 
     def action(self, channel, message):
-        self.sendmsg(channel,"\x01ACTION {0}\x01".format(message))
+        self.sendmsg(channel, "\x01ACTION {0}\x01".format(message))
 
-    def kick(self,channel, user, message):
-        user = user.replace(" ","").replace(":","")
+    def kick(self, channel, user, message):
+        user = user.replace(" ", "").replace(":", "")
         self.send("KICK {0} {1} :{2}".format(channel, user, message))
 
     def op(self, channel, nick):
@@ -52,12 +55,12 @@ class connection_wrapper(object):
 
     def mode(self, channel, nick, mode):
         self.send("MODE {0} {1} {2}".format(channel, mode, nick))
-        
+
     def notice(self, user, message):
         self.send("NOTICE {0} :{1}".format(user, message))
 
     def quit(self, message=""):
         self.send("QUIT : {0}".format(message))
-    
+
     def ctcp(self, user, message):
         self.send("PRIVMSG {0} :\x01{1}\x01\x01".format(user, message))

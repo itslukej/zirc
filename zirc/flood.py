@@ -13,7 +13,7 @@ class floodProtect(object):
                 connection = self.irc_queue[0][0]
                 raw = self.irc_queue[0][1]
                 self.irc_queue.pop(0)
-            except:
+            except Exception:
                 self.irc_queue_running = False
                 break
             connection.send(raw)

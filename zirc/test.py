@@ -20,12 +20,12 @@ class TestCase(object):
                 print("Attempting to run on_all...")
                 util.function_argument_call(self.on_all, args)()
 
-            text_type_func_name = "on_"+event.text_type.lower()
+            text_type_func_name = "on_" + event.text_type.lower()
             if hasattr(self, text_type_func_name):
                 print("Attempting to run {0}".format(text_type_func_name))
                 util.function_argument_call(getattr(self, text_type_func_name), args)()
 
-            raw_type_func_name = "on_"+event.type.lower()
+            raw_type_func_name = "on_" + event.type.lower()
             if raw_type_func_name != text_type_func_name:
                 if hasattr(self, raw_type_func_name):
                     print("Attempting to run {0}".format(raw_type_func_name))
