@@ -3,9 +3,9 @@ import os, threading
 def fifo_while(send_function, name):
     if not os.path.exists(name):
         os.mkfifo(name)
-    with open(name, "r") as file:
+    with open(name, "r") as f:
         while True:
-            line = file.readline()[:-1]
+            line = f.readline()[:-1]
             if len(line) > 0:
                 send_function(line)
                 

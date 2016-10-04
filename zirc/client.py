@@ -2,12 +2,9 @@ from .connection import Socket
 from .event import Event
 from .flood import floodProtect
 from .loop import EventLoop
-from .errors import *
+from .errors import NoSocket, NoConfig
 from . import util
 from .wrappers import connection_wrapper
-
-from base64 import b64encode
-import sys,time
 
 class Client(object):
     listeners = []

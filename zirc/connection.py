@@ -19,7 +19,8 @@ class Socket(object):
         self.wrapper = wrapper
     def connect(self, socket_address):
         self.sock = self.wrapper(self.sock)
-        self.bind_address and sock.bind(self.bind_address)
+        if self.bind_address:
+            self.sock.bind(self.bind_address)
         self.sock.connect(socket_address)
         
         return self.sock

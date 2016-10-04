@@ -1,4 +1,4 @@
-import socks,socket
+import socks, socket
 SOCKS5 = socks.SOCKS5
 SOCKS4 = socks.SOCKS4
 HTTP = socks.HTTP
