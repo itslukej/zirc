@@ -8,7 +8,7 @@ def function_argument_call(func, arguments, do_thread=True):
     x = {}
     for val, arg in enumerate(accepts):
         if val == 0 and (inspect.ismethod(func) or inspect.isclass(func)):
-            continue #Ingnore first argument if it is a method
+            continue  # Ingnore first argument if it is a method
         x[arg] = arguments.get(arg, None)
     if do_thread:
         thread = threading.Thread(target=func, kwargs=x)

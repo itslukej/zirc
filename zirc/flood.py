@@ -28,7 +28,7 @@ class floodProtect(object):
             self.queuet.start()
 
     def queue_add_first(self, connection, raw):
-        self.irc_queue=[[connection,raw]]+self.irc_queue
+        self.irc_queue = [[connection, raw]] + self.irc_queue
         if not self.irc_queue_running:
             self.irc_queue_running = True
             self.queuet = Thread(target=self.queue_thread)

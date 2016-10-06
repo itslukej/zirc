@@ -1,5 +1,5 @@
 import sys as _sys
-if _sys.version_info > (2,7):
+if _sys.version_info > (2, 7):
     class ConnectionError(OSError):
         pass
 
@@ -16,7 +16,7 @@ class NoConfig(IRCError):
     pass
 
 
-#test.py
+# test.py
 class TestError(Exception):
     pass
 

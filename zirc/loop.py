@@ -9,8 +9,10 @@ class EventLoop(object):
         self.current_job = None
         self.break_loop = False
         self.recv_func = recv_func
+
     def create_job(self, name, method, do_thread=False):
         self.jobs[name] = {"method": method, "thread": do_thread}
+
     def run(self):
         while True:
             try:
@@ -24,6 +26,7 @@ class EventLoop(object):
                     self.cycles += 1
             except KeyboardInterrupt:
                 break
+
     def join(self):
         """returns None when the current job is complete"""
         while self.current_job is not None:

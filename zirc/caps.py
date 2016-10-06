@@ -11,8 +11,8 @@ class Caps(object):
                 self.stringcaps.append(cap.name)
             else:
                 self.stringcaps.append(cap)
-                
-    def handler(self,event):
+
+    def handler(self, event):
         if event.arguments[0] == "LS":
             servcaps = event.arguments[1].split(' ')
             for c in servcaps:
@@ -21,7 +21,7 @@ class Caps(object):
             if not self.availablecaps:
                 self.bot.send("CAP END")
             else:
-                self.bot.send("CAP REQ :"+" ".join(self.availablecaps))
+                self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
         elif event.arguments[0] == "ACK":
             for cap in self.caps:
                 if hasattr(cap, "run"):
@@ -29,8 +29,7 @@ class Caps(object):
 
     def run(self, bot):
         self.bot = bot
-        self.bot.listen(self.handler,"cap")
+        self.bot.listen(self.handler, "cap")
         self.bot.send("CAP LS")
-        
 
     __call__ = run

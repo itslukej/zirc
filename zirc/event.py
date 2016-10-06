@@ -19,7 +19,7 @@ class Event(object):
             self.type, args = raw.split(" ", 1)
             self.source = self.target = None
         if self.target:
-            if self.target.startswith(":"): # n!u@h NICK :nuh
+            if self.target.startswith(":"):  # n!u@h NICK :nuh
                 self.target = self.target.replace(":", "", 1)
         self.arguments = []
         if args.startswith(":"):
@@ -31,7 +31,7 @@ class Event(object):
                 self.arguments.append(arg)
         if len(args) > 1:
             self.arguments.append(args[1])
-    
+
         self.text_type = irc_events.get(self.type, self.type).upper()
 
     def __str__(self):

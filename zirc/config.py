@@ -3,7 +3,7 @@ from .caps import Caps
 class IRCConfig(object):
     """
     Class for holding zIRC config infomation.
-    
+
     >>> self.config = zirc.IRCConfig(nickname="IRCConfigTest")
     >>> self.connect(self.config)
     """
@@ -15,7 +15,7 @@ class IRCConfig(object):
                   "realname": "zIRC Bot",
                   "channels": ["#zirc"],
                   "caps": Caps()
-                  }
+        }
         self.dict.update(c)
 
     def sterilise(self, method):

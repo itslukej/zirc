@@ -8,8 +8,10 @@ class Proxy(socks.socksocket):
         self.host = host
         self.port = port
         self.protocol = protocol
+
     def __repr__(self):
         return "Proxy({0}, {1})".format(self.host, self.protocol)
+
     def __call__(self, family=socket.AF_INET, type=socket.SOCK_STREAM):
         socks.socksocket.__init__(self, family, type)
         self.set_proxy(self.protocol, self.host, self.port)

@@ -8,7 +8,7 @@ def fifo_while(send_function, name):
             line = f.readline()[:-1]
             if len(line) > 0:
                 send_function(line)
-                
+
 def Fifo(send_function, name="fifo"):
     thread = threading.Thread(target=fifo_while, args=(send_function, name))
     thread.daemon = True
