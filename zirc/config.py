@@ -8,14 +8,15 @@ class IRCConfig(object):
     >>> self.connect(self.config)
     """
     def __init__(self, **c):
-        self.dict = {"host": "irc.freenode.net",
-                  "port": 6667,
-                  "nickname": "my-zIRC-Bot",
-                  "ident": "bot",
-                  "realname": "zIRC Bot",
-                  "channels": ["#zirc"],
-                  "caps": Caps()
-        }
+        self.dict = {
+                        "host": "irc.freenode.net",
+                        "port": 6667,
+                        "nickname": "my-zIRC-Bot",
+                        "ident": "bot",
+                        "realname": "zIRC Bot",
+                        "channels": ["#zirc"],
+                        "caps": Caps()
+                     }
         self.dict.update(c)
 
     def sterilise(self, method):

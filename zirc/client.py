@@ -1,5 +1,3 @@
-from .connection import Socket
-from .event import Event
 from .flood import floodProtect
 from .loop import EventLoop
 from .errors import NoSocket, NoConfig

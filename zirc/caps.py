@@ -1,5 +1,3 @@
-from .ext import sasl
-
 class Caps(object):
     def __init__(self, *args):
         self.caps = list(args)

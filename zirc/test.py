@@ -30,7 +30,7 @@ class TestCase(object):
                 if hasattr(self, raw_type_func_name):
                     print("Attempting to run {0}".format(raw_type_func_name))
                     util.function_argument_call(getattr(self, raw_type_func_name), args)()
-            
+ 
             if event.type == "PING":
                 self.send("PONG :{0}".format(" ".join(event.arguments)))
         print("Done!")

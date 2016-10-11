@@ -5,6 +5,7 @@ HTTP = socks.HTTP
 
 class Proxy(socks.socksocket):
     def __init__(self, host="localhost", port=1080, protocol=socks.SOCKS5):
+        super().__init__()
         self.host = host
         self.port = port
         self.protocol = protocol
