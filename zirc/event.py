@@ -7,6 +7,17 @@ class Event(object):
 
     def __init__(self, raw):
         self.raw = ''.join([i if ord(i) < 128 else ' ' for i in raw])
+        self.tags = []
+        if raw.startswith("@"):
+            tags, raw = raw.split(" ", 1)
+            tags = tags.replace("@", "", 1)
+            tags = tags.split(";")
+            for tag in tags:
+                if "=" in tag:
+                    tag = tag.split("=", 1)
+                    self.tags.append({tag[0]: tag[1]})
+                else:
+                    self.tags.append(tag)
         if raw.startswith(":"):
             raw = raw.replace(":", "", 1)
             if len(raw.split(" ", 3)) > 3:
@@ -41,6 +52,7 @@ class Event(object):
             "source: {source}, "
             "target: {target}, "
             "arguments: {arguments}, "
+            "tags: {tags}, "
             "raw: {raw} "
         )
         return tmpl.format(**vars(self))
