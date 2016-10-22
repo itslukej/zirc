@@ -1,5 +1,41 @@
 # Change Log
 
+## [v1.2.3](https://github.com/itslukej/zirc/tree/v1.2.3) (2016-09-30)
+[Full Changelog](https://github.com/itslukej/zirc/compare/v1.2.2...v1.2.3)
+
+**Merged pull requests:**
+
+- Make wrappers.py consistent [\#19](https://github.com/itslukej/zirc/pull/19) ([wolfy1339](https://github.com/wolfy1339))
+- Add support for server passwords [\#18](https://github.com/itslukej/zirc/pull/18) ([IndigoTiger](https://github.com/IndigoTiger))
+- Close socket when we get a KeyboardInterrupt [\#17](https://github.com/itslukej/zirc/pull/17) ([wolfy1339](https://github.com/wolfy1339))
+- Port changes from \#15 into test.py [\#16](https://github.com/itslukej/zirc/pull/16) ([wolfy1339](https://github.com/wolfy1339))
+- Prevent infinite loop when sending PRIVMSG to bot [\#15](https://github.com/itslukej/zirc/pull/15) ([wolfy1339](https://github.com/wolfy1339))
+- Update README.md [\#13](https://github.com/itslukej/zirc/pull/13) ([MicroDroid](https://github.com/MicroDroid))
+- Update README.md [\#11](https://github.com/itslukej/zirc/pull/11) ([MicroDroid](https://github.com/MicroDroid))
+- Fix a NICK handling bug in event [\#10](https://github.com/itslukej/zirc/pull/10) ([IndigoTiger](https://github.com/IndigoTiger))
+- Add sasl codes to events.json [\#8](https://github.com/itslukej/zirc/pull/8) ([jeffluo35](https://github.com/jeffluo35))
+
+## [v1.2.2](https://github.com/itslukej/zirc/tree/v1.2.2) (2016-08-26)
+[Full Changelog](https://github.com/itslukej/zirc/compare/v1.2.1...v1.2.2)
+
+## [v1.2.1](https://github.com/itslukej/zirc/tree/v1.2.1) (2016-08-26)
+[Full Changelog](https://github.com/itslukej/zirc/compare/v1.2.0...v1.2.1)
+
+**Merged pull requests:**
+
+- Fix a bug in parsing 005 arguments [\#7](https://github.com/itslukej/zirc/pull/7) ([IndigoTiger](https://github.com/IndigoTiger))
+
+## [v1.2.0](https://github.com/itslukej/zirc/tree/v1.2.0) (2016-07-17)
+[Full Changelog](https://github.com/itslukej/zirc/compare/v1.1.0...v1.2.0)
+
+**Merged pull requests:**
+
+- Moved sections, simplified sentences [\#5](https://github.com/itslukej/zirc/pull/5) ([MicroDroid](https://github.com/MicroDroid))
+- Add syntax highlighting for Python code in README.md [\#4](https://github.com/itslukej/zirc/pull/4) ([wolfy1339](https://github.com/wolfy1339))
+
+## [v1.1.0](https://github.com/itslukej/zirc/tree/v1.1.0) (2016-07-10)
+[Full Changelog](https://github.com/itslukej/zirc/compare/v1.0.2...v1.1.0)
+
 ## [v1.0.2](https://github.com/itslukej/zirc/tree/v1.0.2) (2016-07-09)
 [Full Changelog](https://github.com/itslukej/zirc/compare/v1.0.1...v1.0.2)
 
