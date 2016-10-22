@@ -22,15 +22,17 @@ def getColour(colour):
     for key in colours.keys():
         if colour in colours[key]:
             return key
+        else:
+            pass
 
 def colour(string, c):
     if c == 'rainbow':
         coloured = ''
-        for colours in rainbow:
-            for i in range(0, len(string)):
-                coloured += "\x03" + getColour(colours) + string[i] + "\x03"
-        return coloured
+        for colour in rainbow:
+            for character in string:
+                coloured += "\x03" + getColour(colour) + character
+        return coloured + "\x0F"
     elif c is None:
         return string
     else:
-        return "\x03" + getColour(c) + string + "\x03"
+        return "\x03" + getColour(c) + string + "\x0F"
