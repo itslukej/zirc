@@ -93,13 +93,13 @@ class Client(object):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
         strings = [message[i:i + MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
-            self.send("PRIVMSG {0} :{1}".format(channel, message))
+            self.send("PRIVMSG {0} :{1}".format(channel, util.colours.colour(message, colour)))
 
     def reply(self, event, message, colour=None):
         if event.target == self._config['nickname']:
-            self.privmsg(event.source.nick, message)
+            self.privmsg(event.source.nick, message, colour=colour)
         else:
-            self.privmsg(event.target, message)
+            self.privmsg(event.target, message, colour=colour)
 
     def listen(self, func, event_name):
         self.listeners.append((event_name.lower(), func))

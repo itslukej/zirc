@@ -16,7 +16,21 @@ colours = {
     '14': ['gray', 'grey'],
     '15': ['lightgray', 'lightgrey', 'silver'],
 }
-colours['rainbow'] = ''
+rainbow = ['red', 'olive', 'yellow', 'green', 'blue', 'navy', 'violet']
+
+def getColour(colour):
+    for key in colours.keys():
+        if c in colours[key]:
+            return colours[key]
 
 def colour(string, c):
-    return "\x03" + colours[c] + string + "x03"
+    if c == 'rainbow':
+        coloured = ''
+        for i in rainbow:
+            for e in range(0, len(string)):
+                coloured += "\x03" + getColour(i) + string[e] + "x03"
+        return coloured
+    elif c is None:
+        return string
+    else:
+        return "\x03" + getColour(c) + string + "x03"
