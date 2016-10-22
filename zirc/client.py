@@ -89,13 +89,13 @@ class Client(object):
                 self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
 
     # Basic client use
-    def privmsg(self, channel, message):
+    def privmsg(self, channel, message, colour=None):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
         strings = [message[i:i + MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
             self.send("PRIVMSG {0} :{1}".format(channel, message))
 
-    def reply(self, event, message):
+    def reply(self, event, message, colour=None):
         if event.target == self._config['nickname']:
             self.privmsg(event.source.nick, message)
         else:
