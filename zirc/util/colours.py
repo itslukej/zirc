@@ -21,14 +21,14 @@ rainbow = ['red', 'olive', 'yellow', 'green', 'blue', 'navy', 'violet']
 def getColour(colour):
     for key in colours.keys():
         if colour in colours[key]:
-            return colours[key]
+            return key
 
 def colour(string, c):
     if c == 'rainbow':
         coloured = ''
-        for i in rainbow:
-            for e in range(0, len(string)):
-                coloured += "\x03" + getColour(i) + string[e] + "x03"
+        for colours in rainbow:
+            for i in range(0, len(string)):
+                coloured += "\x03" + getColour(colours) + string[i] + "x03"
         return coloured
     elif c is None:
         return string
