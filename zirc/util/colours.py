@@ -28,9 +28,9 @@ def colour(string, c):
         coloured = ''
         for colours in rainbow:
             for i in range(0, len(string)):
-                coloured += "\x03" + getColour(colours) + string[i] + "x03"
+                coloured += "\x03" + getColour(colours) + string[i] + "\x03"
         return coloured
     elif c is None:
         return string
     else:
-        return "\x03" + getColour(c) + string + "x03"
+        return "\x03" + getColour(c) + string + "\x03"
