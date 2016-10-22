@@ -20,7 +20,7 @@ rainbow = ['red', 'olive', 'yellow', 'green', 'blue', 'navy', 'violet']
 
 def getColour(colour):
     for key in colours.keys():
-        if c in colours[key]:
+        if colour in colours[key]:
             return colours[key]
 
 def colour(string, c):
