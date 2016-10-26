@@ -1,4 +1,4 @@
-colours = {
+colors = {
     '00': ['white'],
     '01': ['black'],
     '02': ['navy'],
@@ -18,27 +18,27 @@ colours = {
 }
 rainbow = ['red', 'olive', 'yellow', 'green', 'blue', 'navy', 'violet']
 
-def getColour(colour):
-    for key in colours.keys():
-        if colour in colours[key]:
+def getcolor(color):
+    for key in colors.keys():
+        if color in colors[key]:
             return key
         else:
             pass
 
-def colour(string, c):
+def color(string, c):
     if c == 'rainbow':
         i = 0
-        coloured = ""
+        colored = ""
 
         for character in string:
             if i > (len(rainbow) - 1):  # We substract one because i starts at 0 and len(rainbow) at 1
                 i = 0
 
-            coloured += "\x03{0}{1}".format(getColour(rainbow[i]), character)
+            colored += "\x03{0}{1}".format(getcolor(rainbow[i]), character)
             i += 1
 
-        return coloured + "\x0F"
+        return colored + "\x0F"
     elif c is None:
         return string
     else:
-        return "\x03{}{}\x0F".format(getColour(c), string)   
+        return "\x03{}{}\x0F".format(getcolor(c), string)   

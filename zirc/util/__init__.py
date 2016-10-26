@@ -1,5 +1,5 @@
 import inspect, threading
-from . import colours
+from . import colors
 
 def function_argument_call(func, arguments, do_thread=True):
     try:
