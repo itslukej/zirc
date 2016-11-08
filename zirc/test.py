@@ -13,7 +13,7 @@ class TestCase(object):
             except:
                 raise errors.InvalidLine(line)
 
-            args = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]
+            args = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]}
             args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
 
             if hasattr(self, "on_all"):
