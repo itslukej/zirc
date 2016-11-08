@@ -1,4 +1,6 @@
-#Internet Relay Chat (IRC) Protocol client library [![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc) [![Snippets Count](https://codebottle.io/api/v1/embed/searchbadge.php?keywords=%22zirc%22&language=Python)](https://codebottle.io/?q=%22zirc%22)
+#Internet Relay Chat (IRC) Protocol client library
+[![Build Status](https://travis-ci.org/itslukej/zirc.svg?branch=master)](https://travis-ci.org/itslukej/zirc)
+[![Snippets Count](https://codebottle.io/api/v1/embed/searchbadge.php?keywords=%22zirc%22&language=Python)](https://codebottle.io/?q=%22zirc%22)
 
 ###Quick Start
 ```python
@@ -26,7 +28,7 @@ class Bot(zirc.Client):
 Bot()
 ```
 
-This library implements IRC protocol, It's an event-driven IRC Protocol framework.
+This library implements the IRC protocol, it's an event-driven IRC Protocol framework.
 
 #Installation
 
@@ -44,7 +46,7 @@ sudo pip install git+https://github.com/itslukej/zirc.git
 sudo pip3 install git+https://github.com/itslukej/zirc.git
 ```
 
-> Github will contain latest bug fixes and improvements but sometimes also "bad quality" code.
+> Github will contain the latest bug fixes and improvements but sometimes also "bad quality" code.
 
 #Features
 
