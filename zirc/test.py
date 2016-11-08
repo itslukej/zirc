@@ -13,7 +13,7 @@ class TestCase(object):
             except:
                 raise errors.InvalidLine(line)
 
-            args = {"event": event, "bot": self, "irc": connection_wrapper(self)}
+            args = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]
             args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
 
             if hasattr(self, "on_all"):
@@ -34,14 +34,17 @@ class TestCase(object):
             if event.type == "PING":
                 self.send("PONG :{0}".format(" ".join(event.arguments)))
         print("Done!")
+
     def send(self, data):
         print("RESPONSE: '{0}'".format(data))
         if hasattr(self, "on_send"):
             self.on_send(data)
+
     def reply(self, event, message):
         if event.target == 'zIRC-test':
             self.privmsg(event.source.nick, message)
         else:
             self.privmsg(event.target, message)
+
     def privmsg(self, channel, message):
         self.send("PRIVMSG {0} :{1}".format(channel, message))
