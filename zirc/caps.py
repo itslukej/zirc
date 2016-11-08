@@ -11,19 +11,22 @@ class Caps(object):
                 self.stringcaps.append(cap)
 
     def handler(self, event):
-        if event.arguments[0] == "LS":
-            servcaps = event.arguments[1].split(' ')
-            for c in servcaps:
-                if c in self.stringcaps:
-                    self.availablecaps.append(c)
-            if not self.availablecaps:
-                self.bot.send("CAP END")
-            else:
-                self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
-        elif event.arguments[0] == "ACK":
-            for cap in self.caps:
-                if hasattr(cap, "run"):
-                    cap.run(self.bot)
+        if not self.done:
+            if event.arguments[0] == "LS":
+                servcaps = event.arguments[1].split(' ')
+                for c in servcaps:
+                    if c in self.stringcaps:
+                        self.availablecaps.append(c)
+                if not self.availablecaps:
+                    self.bot.send("CAP END")
+                else:
+                    self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
+                self.done = True
+            elif event.arguments[0] == "ACK":
+                for cap in self.caps:
+                    if hasattr(cap, "run"):
+                        cap.run(self.bot)
+                self.done = True
 
     def run(self, bot):
         self.bot = bot
