@@ -21,7 +21,6 @@ class Caps(object):
                     self.bot.send("CAP END")
                 else:
                     self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
-                self.done = True
             elif event.arguments[0] == "ACK":
                 for cap in self.caps:
                     if hasattr(cap, "run"):
