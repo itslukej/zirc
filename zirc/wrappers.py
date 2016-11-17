@@ -16,8 +16,11 @@ class connection_wrapper(object):
     def nick(self, nick):
         self.send("NICK {0}".format(nick))
 
-    def join(self, chan):
-        self.send("JOIN {0}".format(chan))
+    def join(self, chan, key=None):
+        if key:
+            self.send("JOIN {0} {1}".format(chan, key))
+        else:
+            self.send("JOIN {0}".format(chan))
 
     def invite(self, chan, user):
         self.send("INVITE {0} {1}".format(user, chan))
