@@ -29,6 +29,9 @@ class connection_wrapper(object):
         user = user.replace(" ", "").replace(":", "")
         self.send("KICK {0} {1} :{2}".format(channel, user, message))
 
+    def remove(self, channel, user, message):
+        self.send("REMOVE {0} {1} :{2}".format(channel, user, message))
+
     def op(self, channel, nick):
         self.send("MODE {0} +o {1}".format(channel, nick))
 
