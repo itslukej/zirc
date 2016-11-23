@@ -42,11 +42,13 @@ class TestCase(object):
         if hasattr(self, "on_send"):
             self.on_send(data)
 
-    def reply(self, event, message):
+    def reply(self, event, message, color=None):
+        del color
         if event.target == 'zIRC-test':
             self.privmsg(event.source.nick, message)
         else:
             self.privmsg(event.target, message)
 
-    def privmsg(self, channel, message):
+    def privmsg(self, channel, message, color=None):
+        del color
         self.send("PRIVMSG {0} :{1}".format(channel, message))
