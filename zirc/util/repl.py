@@ -5,7 +5,7 @@ class Repl(code.InteractiveConsole):
     def __init__(self, items=None):
         if items is None:
             items = {}
-        super(code.InteractiveConsole, self).__init__(items)
+        super(Repl, self).__init__(items)
         self._buffer = ""
 
     def write(self, data):
