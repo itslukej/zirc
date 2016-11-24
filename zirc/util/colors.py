@@ -45,7 +45,7 @@ def rainbow(string):
         if i > (len(rainbow) - 1):  # We substract one because i starts at 0 and len(rainbow) at 1
             i = 0
 
-        colored += "{0}{1}".format(colors[rainbow[i].upper()]), character)
+        colored += "{0}{1}".format(colors[rainbow[i].upper()], character)
         i += 1
 
     return colored + "\x0F"
