@@ -25,7 +25,7 @@ colors = {
     "GRAY": "\x0314",
     "LIGHTGRAY": "\x0315",
     "LIGHTGREY": "\x0315",
-    "SILVER": "\x0315"
+    "SILVER": "\x0315",
 
     "NORMAL": "\x0F",
     "UNDERLINE": "\x1F",
@@ -53,8 +53,8 @@ def rainbow(string):
 def background(string, bg):
     c = string.find("\x03") != -1
     if c and bg is not None:
-        return color(",{0}{1}".format(colors[bg], string), c)
-    elif c and bg is not None:
+        return ",{0}{1}".format(colors[bg], string)
+    elif not c and bg is not None:
         return "\x03{0},{1}{2}\x0F".format(colors["black"], colors[bg], string)
     elif bg is None:
-        return color(string, c)
+        return string
