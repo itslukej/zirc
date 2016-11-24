@@ -4,6 +4,7 @@ class Caps(object):
         self.availablecaps = []
         self.stringcaps = []
         self.done = False
+        self.args = {}
         for cap in self.caps:
             if not isinstance(cap, str):
                 self.stringcaps.append(cap.name)
@@ -15,8 +16,13 @@ class Caps(object):
             if event.arguments[0] == "LS":
                 servcaps = event.arguments[1].split(' ')
                 for c in servcaps:
-                    if c in self.stringcaps:
+                    if c.split("=")[0] in self.stringcaps:
                         self.availablecaps.append(c)
+                        if c.find('=') != -1:
+                            c, args = c.split('=')
+                            self.args[c] = args.split(',')
+                        else:
+                            self.args[c] = None
                 if not self.availablecaps:
                     self.bot.send("CAP END")
                 else:
@@ -24,7 +30,7 @@ class Caps(object):
             elif event.arguments[0] == "ACK":
                 for cap in self.caps:
                     if hasattr(cap, "run"):
-                        cap.run(self.bot)
+                        cap.run(self.bot, args=self.args[cap])
                 self.done = True
 
     def run(self, bot):

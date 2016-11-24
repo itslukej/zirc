@@ -12,17 +12,24 @@ class Sasl(object):
         self.method = method
         self.retries = 0
 
-    def run(self, bot):
+    def run(self, bot, args=None):
+        if args is None:
+            mechanisms = []
+        else:
+            mechanisms = args
         self.bot = bot
         bot.listen(self.on_authenticate, "authenticate")
         bot.listen(self.on_saslfailed, "saslfailed")
         bot.listen(self.on_saslsuccess, "saslsuccess")
-        if self.method == "plain":
-            bot.send("AUTHENTICATE PLAIN")
-        elif self.method == "external":
-            bot.send("AUTHENTICATE EXTERNAL")
+        if self.method in mechanisms:
+            if self.method == "plain":
+                bot.send("AUTHENTICATE PLAIN")
+            elif self.method == "external":
+                bot.send("AUTHENTICATE EXTERNAL")
+            else:
+                raise SASLError("Not implemented yet")
         else:
-            raise SASLError("Not implemented yet")
+            raise SASLError("Not supported by server")
 
     def on_authenticate(self, event):
         if event.arguments[0] == "+":
