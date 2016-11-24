@@ -16,7 +16,7 @@ class Client(object):
             raise NoConfig("config_class not a argument when calling connect")
 
         self._config = config_class
-        self.socket = self.connection((self._config["host"], self._config["port"]))
+        self.socket = self.connection((self._config["host"], self._config["port"]), keyfile=None, certfile=None)
 
         self._config["caps"](self)
 

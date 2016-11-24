@@ -1,4 +1,5 @@
 import socket
+from types import LambdaType
 
 same = lambda x: x
 
@@ -18,8 +19,11 @@ class Socket(object):
         self.bind_address = bind_address
         self.wrapper = wrapper
 
-    def connect(self, socket_address):
-        self.sock = self.wrapper(self.sock)
+    def connect(self, socket_address, keyfile=None, certfile=None):
+        if isinstance(self.wrapper, LambdaType):
+            self.sock = self.wrapper(self.sock)
+        else:
+            self.sock = self.wrapper(self.sock, keyfile=keyfile, certfile=certfile)
         if self.bind_address:
             self.sock.bind(self.bind_address)
         self.sock.connect(socket_address)

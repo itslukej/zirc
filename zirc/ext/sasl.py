@@ -18,12 +18,17 @@ class Sasl(object):
         bot.listen(self.on_saslsuccess, "saslsuccess")
         if self.method == "plain":
             bot.send("AUTHENTICATE PLAIN")
+        elif self.method == "external":
+             bot.send("AUTHENTICATE EXTERNAL")
         else:
             raise SASLError("not implemented yet")
 
     def on_authenticate(self, event):
         if event.arguments[0] == "+":
-            password = base64.b64encode("{0}\x00{0}\x00{1}".format(self.username, self.password).encode("UTF-8")).decode("UTF-8")
+            if self.method == 'plain':
+                password = base64.b64encode("{0}\x00{0}\x00{1}".format(self.username, self.password).encode("UTF-8")).decode("UTF-8")
+            elif self.method == 'external':
+                password = base64.b64encode(self.username)
             self.bot.send("AUTHENTICATE {0}".format(password))
 
     def on_saslfailed(self, event):
