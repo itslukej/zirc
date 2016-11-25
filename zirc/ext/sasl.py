@@ -10,6 +10,7 @@ class Sasl(object):
         self.username = username
         self.password = password
         self.method = method
+        self.retries = 0
 
     def run(self, bot):
         self.bot = bot
@@ -21,7 +22,7 @@ class Sasl(object):
         elif self.method == "external":
              bot.send("AUTHENTICATE EXTERNAL")
         else:
-            raise SASLError("not implemented yet")
+            raise SASLError("Not implemented yet")
 
     def on_authenticate(self, event):
         if event.arguments[0] == "+":
@@ -32,7 +33,14 @@ class Sasl(object):
             self.bot.send("AUTHENTICATE {0}".format(password))
 
     def on_saslfailed(self, event):
-        raise SASLError("SASL authentication failed!")  # do something else later, like try another method
+        self.retries += 1
+        if self.retries == 2:
+            if self.method == 'external':
+                self.method = 'plain'
+                self.bot.send("AUTHENTICATE PLAIN")
+            else:
+	        raise SASLError("SASL authentication failed!")
+                break
 
     def on_saslsuccess(self, event):
         self.bot.send("CAP END")
