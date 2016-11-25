@@ -40,7 +40,6 @@ class Sasl(object):
                 self.bot.send("AUTHENTICATE PLAIN")
             else:
                 raise SASLError("SASL authentication failed!")
-                break
 
     def on_saslsuccess(self, event):
         self.bot.send("CAP END")
