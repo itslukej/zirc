@@ -20,7 +20,7 @@ class Sasl(object):
         if self.method == "plain":
             bot.send("AUTHENTICATE PLAIN")
         elif self.method == "external":
-             bot.send("AUTHENTICATE EXTERNAL")
+            bot.send("AUTHENTICATE EXTERNAL")
         else:
             raise SASLError("Not implemented yet")
 

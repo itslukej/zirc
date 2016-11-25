@@ -7,6 +7,7 @@ class Bot(zirc.Client):
         self.connect(self.config)
         self.start()
 
+    @staticmethod
     def on_welcome(irc, event):
         irc.send("JOIN #zirc")
         time.sleep(1)
@@ -16,6 +17,7 @@ class Bot(zirc.Client):
         time.sleep(1)
         os._exit(0)
 
+    @staticmethod
     def on_all(irc, event):
         print(event)
 
