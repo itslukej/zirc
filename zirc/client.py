@@ -100,7 +100,7 @@ class Client(object):
 
     def reply(self, event, message, background=None, rainbow=False):
         if event.target == self._config['nickname']:
-            self.privmsg(event.source.nick, message, background=background)
+            self.privmsg(event.source.nick, message, background=background, rainbow=rainbow)
         else:
             self.privmsg(event.target, message, background=background, rainbow=rainbow)
 
