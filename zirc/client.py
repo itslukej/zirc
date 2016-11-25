@@ -1,3 +1,4 @@
+from string import Template
 from .flood import floodProtect
 from .loop import EventLoop
 from .errors import NoSocket, NoConfig
@@ -93,10 +94,11 @@ class Client(object):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
         strings = [message[i:i + MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
+            msg = Template(message).substitute(**util.colors.colors)
             if rainbow:
-                self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(util.colors.rainbow(message.format(**util.colors.colors), background))))
+                self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(util.colors.rainbow(msg), background)))
             else:
-                self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(message.format(**util.colors.colors), background)))
+                self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(msg, background)))
 
     def reply(self, event, message, background=None, rainbow=False):
         if event.target == self._config['nickname']:
