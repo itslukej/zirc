@@ -65,24 +65,24 @@ class NickMask(six.text_type):
 
     @property
     def nick(self):
-        nick, sep, userhost = self.partition("!")
+        nick = self.split("!")[0]
         return nick
 
     @property
     def userhost(self):
-        nick, sep, userhost = self.partition("!")
+        userhost = self.split("!")[1]
         return userhost or None
 
     @property
     def host(self):
-        nick, sep, userhost = self.partition("!")
-        user, sep, host = userhost.partition('@')
+        userhost = self.split("!")[1]
+        host = userhost.split('@')[1]
         return host or None
 
     @property
     def user(self):
-        nick, sep, userhost = self.partition("!")
-        user, sep, host = userhost.partition('@')
+        userhost = self.split("!")[1]
+        user = userhost.split('@')[0]
         return user or None
 
     @classmethod
