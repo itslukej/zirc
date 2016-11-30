@@ -21,4 +21,8 @@ class Bot(zirc.Client):
     def on_all(irc, event):
         print(event)
 
+    @classmethod
+    def on_nicknaneinuse(self, irc, event):
+        irc.nick(self.config['nickname'] + '_')
+
 Bot()
