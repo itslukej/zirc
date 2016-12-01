@@ -26,7 +26,7 @@ class connection_wrapper(object):
         self.send("INVITE {0} {1}".format(user, chan))
 
     def action(self, channel, message):
-        self.sendmsg(channel, "\x01ACTION {0}\x01".format(message))
+        self.send("PRIVMSG {0} :\x01ACTION {1}\x01".format(channel, message))
 
     def kick(self, channel, user, message):
         user = user.replace(" ", "").replace(":", "")
