@@ -41,9 +41,15 @@ class Sasl(object):
 
     def on_saslfailed(self, event):
         self.retries += 1
-        if self.retries == 2:
-            if self.method == 'external':
+        if self.method == 'external':
+            if self.retries == 2:
+                self.retries = 1
                 self.method = 'plain'
+                self.bot.send("AUTHENTICATE PLAIN")
+            else:
+                self.bot.send("AUTHENTICATE EXTERNAL")
+        elif self.methid == 'plain':
+            if not self.retries == 2:
                 self.bot.send("AUTHENTICATE PLAIN")
             else:
                 raise SASLError("SASL authentication failed!")
