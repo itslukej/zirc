@@ -32,10 +32,28 @@ class Caps(object):
                 if hasattr(cap, "run"):
                     cap.run(self.bot, args=self.args[cap])
                 self.done = True
+        elif event.arguments[0] == "NEW":
+            servcaps = event.arguments[1].split(" ")
+            newcaps = []
+            for c in self.caps:
+                if c in servcaps:
+                    self.availablecaps.append(c)
+                    newcaps.append(c)
+            if len(newcaps):
+                self.bot.send("CAP REQ :" + " ".join(newcaps))
+        elif event.arguments[0] == "DEL":
+            servcaps = event.arguments[1].split(" ")
+            for c in servcaps:
+                if c in self.stringcaps:
+                    index = self.stringcaps.index(c)
+                    self.stringcaps.remove(c)
+                    del self.caps[index]
+                if c in self.availablecaps:
+                    self.availablecaps.remove(c)
 
     def run(self, bot):
         self.bot = bot
         self.bot.listen(self.handler, "cap")
-        self.bot.send("CAP LS")
+        self.bot.send("CAP LS 302")
 
     __call__ = run
