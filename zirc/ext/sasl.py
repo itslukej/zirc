@@ -36,7 +36,7 @@ class Sasl(object):
             if self.method == 'plain':
                 password = base64.b64encode("{0}\x00{0}\x00{1}".format(self.username, self.password).encode("UTF-8")).decode("UTF-8")
             elif self.method == 'external':
-                password = base64.b64encode(self.username.encode("UTF-8")).decode("UTF-8")
+                password = "+"
             self.bot.send("AUTHENTICATE {0}".format(password))
 
     def on_saslfailed(self, event):
