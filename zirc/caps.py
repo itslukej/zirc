@@ -23,10 +23,10 @@ class Caps(object):
                         self.args[cap] = args.split(',')
                     else:
                         self.args[cap] = None
-                if not self.availablecaps:
-                    self.bot.send("CAP END")
-                else:
-                    self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
+            if not self.availablecaps:
+                self.bot.send("CAP END")
+            else:
+                self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
         elif event.arguments[0] == "ACK" and not self.done:
             for cap in self.caps:
                 if hasattr(cap, "run"):
