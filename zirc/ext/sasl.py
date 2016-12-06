@@ -14,7 +14,7 @@ class Sasl(object):
 
     def run(self, bot, args=None):
         if args is None:
-            mechanisms = []
+            mechanisms = ["external", "plain"]
         else:
             mechanisms = args
         self.bot = bot
