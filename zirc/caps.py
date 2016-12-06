@@ -30,7 +30,7 @@ class Caps(object):
         elif event.arguments[0] == "ACK" and not self.done:
             for cap in self.caps:
                 if hasattr(cap, "run"):
-                    cap.run(self.bot, args=self.args[cap])
+                    cap.run(self.bot, args=self.args[cap.name])
                 self.done = True
         elif event.arguments[0] == "NEW":
             servcaps = event.arguments[1].split(" ")
