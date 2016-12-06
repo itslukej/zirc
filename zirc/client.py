@@ -7,7 +7,7 @@ from .wrappers import connection_wrapper
 class Client(object):
     listeners = []
 
-    def connect(self, config_class=None):
+    def connect(self, config_class=None, keyfile=None, certfile=None):
 
         self.fp = floodProtect()
         if not hasattr(self, "connection"):
@@ -16,7 +16,7 @@ class Client(object):
             raise NoConfig("config_class not a argument when calling connect")
 
         self._config = config_class
-        self.socket = self.connection((self._config["host"], self._config["port"]), keyfile=None, certfile=None)
+        self.socket = self.connection((self._config["host"], self._config["port"]), keyfile=keyfile, certfile=certfile)
 
         self._config["caps"](self)
 
