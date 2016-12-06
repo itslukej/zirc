@@ -22,6 +22,9 @@ class Event(object):
             raw = raw.replace(":", "", 1)
             if len(raw.split(" ", 3)) > 3:
                 self.source, self.type, self.target, args = raw.split(" ", 3)
+                if self.type == "QUIT":
+                    args = raw.split(" ", 2)[-1]
+                    self.target = ""
             else:
                 self.source, self.type, self.target = raw.split(" ", 3)
                 args = ""
