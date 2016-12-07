@@ -8,7 +8,7 @@ class connection_wrapper(object):
         self.privmsg = irc.privmsg
 
     def ping(self):
-        self.send("PING :{}".format(str(int(time()))).encode('utf-8'))
+        self.send("PING :{}".format(int(time())).encode('utf-8'))
 
     def part(self, chan):
         self.send("PART {0}".format(chan))
