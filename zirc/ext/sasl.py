@@ -48,7 +48,7 @@ class Sasl(object):
                 self.bot.send("AUTHENTICATE PLAIN")
             else:
                 self.bot.send("AUTHENTICATE EXTERNAL")
-        elif self.methid == 'plain':
+        elif self.method == 'plain':
             if not self.retries == 2:
                 self.bot.send("AUTHENTICATE PLAIN")
             else:
