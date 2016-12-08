@@ -24,7 +24,7 @@ class Event(object):
                 self.source, self.type, self.target, args = raw.split(" ", 3)
                 if self.type == "QUIT":
                     args = raw.split(" ", 2)[-1]
-                    self.target = ""
+                    self.target = None
             else:
                 self.source, self.type, self.target = raw.split(" ", 3)
                 args = ""
