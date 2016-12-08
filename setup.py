@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='zirc',
-      version='1.2.3',
+      version='1.2.4',
       description='Python IRCP Library',
       long_description="This library implements the IRC protocol, it's an event-driven IRC Protocol framework.",
       url='https://github.com/itslukej/zirc',
