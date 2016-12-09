@@ -1,9 +1,15 @@
 from setuptools import setup, find_packages
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except ImportError:
+    long_description = "This library implements the IRC protocol, it's an event-driven IRC Protocol framework."
+
 
 setup(name='zirc',
       version='1.2.4',
       description='Python IRCP Library',
-      long_description="This library implements the IRC protocol, it's an event-driven IRC Protocol framework.",
+      long_description=long_description,
       url='https://github.com/itslukej/zirc',
       author='Luke J.',
       author_email='me+zirc@lukej.me',
