@@ -26,8 +26,12 @@ class Event(object):
                     args = raw.split(" ", 2)[-1]
                     self.target = None
             else:
-                self.source, self.type, self.target = raw.split(" ", 3)
-                args = ""
+                if raw.split(" ", 2)[1] == "AWAY":
+                    self.source, self.type, args = raw.split(" ", 2)
+                    self.target = None
+                else:
+                    self.source, self.type, self.target = raw.split(" ", 3)
+                    args = ""
             self.source = NickMask(self.source)
         else:
             self.type, args = raw.split(" ", 1)
