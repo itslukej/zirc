@@ -37,8 +37,10 @@ class Event(object):
                 args = " ".join(raw[3:])
             self.source = NickMask(self.source)
         else:
-            self.type, args = raw.split(" ", 1)
-            self.source = self.target = None
+            raw = raw.split(" ")
+            self.type = raw[0]
+            if len(raw) > 1:
+                args = " ".join(raw[1:])
         if len(args1) > 0:
             if len(args) > 0:
                 args = "{0} :{1}".format(args, args1)
