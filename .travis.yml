@@ -1,11 +1,12 @@
 language: python
 cache: pip
 python:
-- '2.7'
+- '2.7.12'
 - '3.2'
 - '3.3'
-- '3.4'
+- '3.4.5'
 - '3.5'
+- 3.6-dev
 - nightly
 install:
 - pip install .
