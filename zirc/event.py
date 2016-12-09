@@ -7,7 +7,13 @@ class Event(object):
 
     def __init__(self, raw):
         self.raw = ''.join([i if ord(i) < 128 else ' ' for i in raw])
+        self.source = None
+        self.type = None
+        self.target = None
+        self.arguments = []
         self.tags = []
+        args = ""
+        args1 = ""
         if raw.startswith("@"):
             tags, raw = raw.split(" ", 1)
             tags = tags.replace("@", "", 1)
@@ -18,28 +24,26 @@ class Event(object):
                     self.tags.append({tag[0]: tag[1]})
                 else:
                     self.tags.append(tag)
+        if " :" in raw:
+            raw, args1 = raw.split(" :", 1)
         if raw.startswith(":"):
             raw = raw.replace(":", "", 1)
-            if len(raw.split(" ", 3)) > 3:
-                self.source, self.type, self.target, args = raw.split(" ", 3)
-                if self.type == "QUIT":
-                    args = raw.split(" ", 2)[-1]
-                    self.target = None
-            else:
-                if raw.split(" ", 2)[1] == "AWAY":
-                    self.source, self.type, args = raw.split(" ", 2)
-                    self.target = None
-                else:
-                    self.source, self.type, self.target = raw.split(" ", 3)
-                    args = ""
+            raw = raw.split(" ")
+            self.source = raw[0]
+            self.type = raw[1]
+            if len(raw) > 2:
+                self.target = raw[2]
+            if len(raw) > 3:
+                args = " ".join(raw[3:])
             self.source = NickMask(self.source)
         else:
             self.type, args = raw.split(" ", 1)
             self.source = self.target = None
-        if self.target:
-            if self.target.startswith(":"):  # n!u@h NICK :nuh
-                self.target = self.target.replace(":", "", 1)
-        self.arguments = []
+        if len(args1) > 0:
+            if len(args) > 0:
+                args = "{0} :{1}".format(args, args1)
+            else:
+                args = ":{0}".format(args1)
         if args.startswith(":"):
             args = args.split(":", 1)
         else:
