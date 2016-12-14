@@ -28,7 +28,7 @@ class Caps(object):
             else:
                 self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
         elif event.arguments[0] == "ACK" and not self.done:
-            for cap in self.caps:
+            for cap in self.stringcaps:
                 if hasattr(cap, "run"):
                     cap.run(self.bot, args=self.args[cap.name])
                 self.done = True
