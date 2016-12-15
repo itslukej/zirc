@@ -34,7 +34,7 @@ colors = {
     "REVERSE": "\u202E"
 }
 
-rainbow = ["red", "orange", "yellow", "green", "blue", "navy", "violet"]
+_rainbow = ["red", "orange", "yellow", "green", "blue", "navy", "violet"]
 
 
 def rainbow(string):
@@ -42,10 +42,10 @@ def rainbow(string):
     colored = ""
 
     for character in string:
-        if i > (len(rainbow) - 1):  # We substract one because i starts at 0 and len(rainbow) at 1
+        if i > (len(_rainbow) - 1):  # We substract one because i starts at 0 and len(rainbow) at 1
             i = 0
 
-        colored += "{0}{1}".format(colors[rainbow[i].upper()], character)
+        colored += "{0}{1}".format(colors[_rainbow[i].upper()], character)
         i += 1
 
     return colored + "\x0F"
@@ -53,8 +53,8 @@ def rainbow(string):
 def background(string, bg):
     c = string.find("\x03") != -1
     if c and bg is not None:
-        return ",{0}{1}".format(colors[bg], string)
+        return "{0},{1}{2}".format(string[:3], colors[bg], string[3:])
     elif not c and bg is not None:
-        return "\x03{0},{1}{2}\x0F".format(colors["black"], colors[bg], string)
+        return "{0},{1}{2}\x0F".format(colors["black"], colors[bg], string)
     elif bg is None:
         return string
