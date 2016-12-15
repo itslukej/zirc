@@ -1,3 +1,4 @@
+from string import Template
 from .flood import floodProtect
 from .loop import EventLoop
 from .errors import NoSocket, NoConfig
@@ -89,17 +90,20 @@ class Client(object):
                 self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
 
     # Basic client use
-    def privmsg(self, channel, message, color=None):
+    def privmsg(self, channel, message, background=None, rainbow=False, style=None):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
         strings = [message[i:i + MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
-            self.send("PRIVMSG {0} :{1}".format(channel, util.colors.color(message, color)))
+            msg = Template(message).safe_substitute(**util.colors.colors)
+            if rainbow:
+                msg = util.colors.rainbow(msg)
+            self.send("PRIVMSG {0} :{1}".format(channel, util.colors.stylize(util.colors.background(msg, background), style)))
 
-    def reply(self, event, message, color=None):
+    def reply(self, event, message, background=None, rainbow=False, style=None):
         if event.target == self._config['nickname']:
-            self.privmsg(event.source.nick, message, color=color)
+            self.privmsg(event.source.nick, message, background=background, rainbow=rainbow, style=style)
         else:
-            self.privmsg(event.target, message, color=color)
+            self.privmsg(event.target, message, background=background, rainbow=rainbow, style=style)
 
     def listen(self, func, event_name):
         self.listeners.append((event_name.lower(), func))
