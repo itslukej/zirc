@@ -58,3 +58,9 @@ def background(string, bg):
         return "{0},{1}{2}\x0F".format(colors["black"], colors[bg], string)
     elif bg is None:
         return string
+
+def stylize(string, style):
+    if style is not None:
+        return "{0}{1}".format(colors[style.upper()], string)
+    else:
+        return string
