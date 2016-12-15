@@ -94,7 +94,7 @@ class Client(object):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
         strings = [message[i:i + MSGLEN] for i in range(0, len(message), MSGLEN)]
         for message in strings:
-            msg = Template(message).substitute(**util.colors.colors)
+            msg = Template(message).safe_substitute(**util.colors.colors)
             if rainbow:
                 self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(util.colors.rainbow(msg), background)))
             else:
