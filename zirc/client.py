@@ -96,9 +96,8 @@ class Client(object):
         for message in strings:
             msg = Template(message).safe_substitute(**util.colors.colors)
             if rainbow:
-                self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(util.colors.rainbow(msg), background)))
-            else:
-                self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(msg, background)))
+                msg = util.colors.rainbow(msg)
+            self.send("PRIVMSG {0} :{1}".format(channel, util.colors.background(msg, background)))
 
     def reply(self, event, message, background=None, rainbow=False):
         if event.target == self._config['nickname']:
