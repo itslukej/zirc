@@ -30,7 +30,7 @@ colors = {
     "NORMAL": "\x0F",
     "UNDERLINE": "\x1F",
     "BOLD": "\x02",
-    "ITALIC": "\35",
+    "ITALIC": "\x1D",
     "REVERSE": "\u202E"
 }
 
