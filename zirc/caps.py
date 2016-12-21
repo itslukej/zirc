@@ -12,8 +12,8 @@ class Caps(object):
                 self.stringcaps.append(cap)
 
     def handler(self, event):
+        servcaps = event.arguments[1].split(' ')
         if event.arguments[0] == "LS" and not self.done:
-            servcaps = event.arguments[1].split(' ')
             for c in servcaps:
                 cap = c.split("=")[0]
                 if cap in self.stringcaps:
@@ -33,7 +33,6 @@ class Caps(object):
                     cap.run(self.bot, args=self.args[cap.name])
                 self.done = True
         elif event.arguments[0] == "NEW":
-            servcaps = event.arguments[1].split(" ")
             newcaps = []
             for c in self.stringcaps:
                 if c in servcaps:
@@ -43,14 +42,13 @@ class Caps(object):
                 self.bot.send("CAP REQ :" + " ".join(newcaps))
                 self.done = False
         elif event.arguments[0] == "DEL":
-            servcaps = event.arguments[1].split(" ")
             for c in servcaps:
+                if c in self.availablecaps:
+                    self.availablecaps.remove(c)
                 if c in self.stringcaps:
                     index = self.stringcaps.index(c)
                     self.stringcaps.remove(c)
                     del self.caps[index]
-                if c in self.availablecaps:
-                    self.availablecaps.remove(c)
 
     def run(self, bot):
         self.bot = bot
