@@ -11,6 +11,9 @@ class Repl(code.InteractiveConsole):
     def write(self, data):
         self._buffer += str(data)
 
+    def flush(self):
+        self._buffer = ""
+
     def run(self, data):
         sys.stdout = self
         self.push(data)
