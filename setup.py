@@ -1,10 +1,15 @@
 from setuptools import setup, find_packages
+from sys import version_info, exit, stderr
+
 try:
     import pypandoc
     long_description = pypandoc.convert('README.md', 'rst')
 except ImportError:
     long_description = "This library implements the IRC protocol, it's an event-driven IRC Protocol framework."
 
+if version_info <= (2, 6, 0) or (version_info[0] == 3 and version_info <= (3, 1, 0)):
+    stderr.write('zIRC requires Python 2.7 or 3.2 and higher')
+    exit(-1)
 
 setup(name='zirc',
       version='1.2.4',
