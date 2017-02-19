@@ -1,3 +1,9 @@
+addons:
+  apt:
+    sources:
+    - pypy
+    packages:
+    - pypy
 language: python
 cache: pip
 python:
@@ -8,9 +14,17 @@ python:
 - '3.5'
 - '3.6'
 - nightly
+- pypy
 install:
 - pip install .
-script: python tests/travis.py
+- |
+  if [[$TRAVIS_PYTHON_VERSION =="pypy"]]; then
+      export PYTHON_BINARY=pypy
+      $PYTHON_BINARY --version
+  else
+      export PYTHON_BINARY=python
+  fi
+script: $PYTHON_BINARY tests/travis.py
 notifications:
   email:
     on_success: never
