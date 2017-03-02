@@ -17,9 +17,10 @@ setup(name='zirc',
       author_email='me+zirc@lukej.me',
       license='GNU',
       packages=find_packages(),
-      install_requires=['six', 'pysocks'],
+      install_requires=['six'],
       extras_require={
-          ':sys_platform=="win32" and python_version == "2.7"': ['win_inet_pton']
+          'pysocks': ['pysocks'],
+          'pysocks:sys_platform=="win32" and python_version == "2.7"': ['win_inet_pton']
       },
       python_requires='>=2.7,!=3.0.*,!=3.1.*',
       include_package_data=True,
