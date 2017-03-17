@@ -29,7 +29,9 @@ notifications:
   email:
     on_success: never
     on_failure: always
-before_deploy: pip install pypandoc
+before_deploy:
+- pip install pypandoc
+- python -c 'import pypandoc;pypandoc.download_pandoc()'
 deploy:
   provider: pypi
   user: Eclipse11
