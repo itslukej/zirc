@@ -17,14 +17,14 @@ python:
 - pypy
 install:
 - |
-  if [[$TRAVIS_PYTHON_VERSION =="pypy"]]; then
+  if [ $TRAVIS_PYTHON_VERSION == "pypy" ]; then
       export PYTHON_BINARY=pypy
       $PYTHON_BINARY --version
   else
       export PYTHON_BINARY=python
   fi
 - |
-  if [-n "TRAVIS_TAG"]; then
+  if [ -n "$TRAVIS_TAG" ]; then
       $PYTHON_BINARY -m pip install pypandoc
       echo -e 'import pypandoc\npypandoc.download_pandoc()' > download_pandoc.py
       $PYTHON_BINARY download_pandoc.py
