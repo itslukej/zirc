@@ -16,7 +16,6 @@ python:
 - nightly
 - pypy
 install:
-- pip install .
 - |
   if [[$TRAVIS_PYTHON_VERSION =="pypy"]]; then
       export PYTHON_BINARY=pypy
@@ -24,14 +23,18 @@ install:
   else
       export PYTHON_BINARY=python
   fi
+- |
+  if [-n "TRAVIS_TAG"]; then
+      $PYTHON_BINARY -m pip install pypandoc
+      echo -e 'import pypandoc\npypandoc.download_pandoc()' > download_pandoc.py
+      $PYTHON_BINARY download_pandoc.py
+  fi
+- $PYTHON_BINARY -m pip install .
 script: $PYTHON_BINARY tests/travis.py
 notifications:
   email:
     on_success: never
     on_failure: always
-before_deploy:
-- pip install pypandoc
-- python -c 'import pypandoc;pypandoc.download_pandoc()'
 deploy:
   provider: pypi
   user: Eclipse11
