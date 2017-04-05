@@ -43,7 +43,6 @@ class TestCase(object):
             self.on_send(data)
 
     def reply(self, event, message, background=None, rainbow=False, style=None):
-        del color
         if event.target == 'zIRC-test':
             self.privmsg(event.source.nick, message, background=background, rainbow=rainbow, style=style)
         else:
