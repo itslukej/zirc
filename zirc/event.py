@@ -83,20 +83,20 @@ class NickMask(six.text_type):
 
     @property
     def userhost(self):
-        userhost = self.split("!")[1]
-        return userhost or None
+        userhost = self.split("!")
+        return userhost if len(userhost) else None
 
     @property
     def host(self):
         userhost = self.split("!")[1]
         host = userhost.split('@')[1]
-        return host or None
+        return host if len(userhost) else None
 
     @property
     def user(self):
         userhost = self.split("!")[1]
         user = userhost.split('@')[0]
-        return user or None
+        return user if len(userhost) else None
 
     @classmethod
     def from_group(cls, group):
