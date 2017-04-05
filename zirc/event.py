@@ -89,7 +89,7 @@ class NickMask(six.text_type):
     @property
     def host(self):
         host = self.split('@')
-        return host[1] if len(userhost) > 1 else None
+        return host[1] if len(host) > 1 else None
 
     @property
     def user(self):
