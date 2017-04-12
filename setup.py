@@ -12,7 +12,7 @@ if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0
     exit(-1)
 
 setup(name='zirc',
-      version='1.2.4',
+      version='1.2.5',
       description='Python IRCP Library',
       long_description=long_description,
       url='https://github.com/itslukej/zirc',
