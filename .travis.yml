@@ -25,9 +25,7 @@ install:
   fi
 - |
   if [ -n "$TRAVIS_TAG" ]; then
-      $PYTHON_BINARY -m pip install pypandoc
-      echo -e 'import pypandoc\npypandoc.download_pandoc()' > download_pandoc.py
-      $PYTHON_BINARY download_pandoc.py
+      pandoc README.md --to=rst > README.rst
   fi
 - $PYTHON_BINARY -m pip install .
 script: $PYTHON_BINARY tests/travis.py
