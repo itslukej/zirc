@@ -7,7 +7,7 @@ try:
 except ImportError:
     long_description = "This library implements the IRC protocol, it's an event-driven IRC Protocol framework."
 
-if version_info <= (2, 6, 0) or (version_info[0] == 3 and version_info <= (3, 1, 0)):
+if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0)):
     stderr.write('zIRC requires Python 2.7 or 3.2 and higher')
     exit(-1)
 
