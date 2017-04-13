@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
 
-with open("README.rst") as f:
+with open("PyPi-README.rst") as f:
     long_description = f.read().replace("\r", "")
 
 if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0)):
