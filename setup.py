@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
 
-if version_info[0] == 2:
+if version_info[0] == 2 or version_info >= (3, 2, 0) and version_info < (3, 3, 0):
     FileNotFoundError = IOError
 try:
     with open("README.rst") as f:
