@@ -4,6 +4,7 @@ addons:
     - pypy
     packages:
     - pypy
+    - pandoc
 language: python
 cache: pip
 python:
