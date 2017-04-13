@@ -43,3 +43,6 @@ deploy:
     distributions: sdist bdist_wheel
     repo: itslukej/zirc
     tags: true
+env:
+  global:
+    secure: RMERMDnOBC6zKUayW7mz/GjF1csa1rjQ9laOywdhEJnWMlo5bD88KLsRJZn/6mmpmv6N86WfYe4v9badTIt3YWkc1md7G5340MbjjVyjgt+OLtMSG5Bah8Rrp1LC/NwuETYyuBp2uEp726h5VSn+SNia+t/yQlCD6qnFDdUAno9ZbRafQXIUCzAVhonCsJ3pZ9I9vhlgYdbOWw3WXqaGOcUbeDaJ9ZpkkrQfOsqD2Gs1brsKfO/wmmTe9qsHBv95O8hJbk+B5JV0I1E2ke0xPao3AZywC5ZzZi7t4mR4wWXy5lk9uFmX+pY8S6C/uULcqtzAjdA/TRziuggT/ReJoQNeoeOlzYMPcbZepjmodmOQJeixCB5v7C8L0zr0xhSxgckvT9vJylM/MzFdWyMgPgH/6qhF9xLK6w2H8l9q2Cfijv0BsA9CV7vlnxeP7Vbh3eLaKIJJd/GC+3zjVmrmfLSye9sci+nYHMviJKPcUk/ml3Rs+c0EBH63EiQd/aIRIAOz77sydkfMRa0CErQJaRSPOjBDtGNhf8KOLwMajWre6acG94QBTmGP6Gnp2p3wfZV+p2ggyJzWTLrb2wzNpMT2+3ziHR+bci62pQmpvWi1hC1yav/32ARZLz3qfhTGeMWGSXqGRV8T+/Yjbov7n+126i4HNw6YJUYMGTx2hmY=
