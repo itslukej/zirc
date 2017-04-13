@@ -1,13 +1,8 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
 
-if version_info[0] == 2 or version_info >= (3, 2, 0) and version_info < (3, 3, 0):
-    FileNotFoundError = IOError
-try:
-    with open("README.rst") as f:
-        long_description = f.read()
-except FileNotFoundError:
-     long_description = "This library implements the IRC protocol, it's an event-driven IRC Protocol framework."
+with open("README.rst") as f:
+    long_description = f.read().replace("\r", "")
 
 if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0)):
     stderr.write('zIRC requires Python 2.7 or 3.2 and higher')

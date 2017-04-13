@@ -4,7 +4,6 @@ addons:
     - pypy
     packages:
     - pypy
-    - pandoc
 language: python
 cache: pip
 python:
@@ -23,10 +22,6 @@ install:
       $PYTHON_BINARY --version
   else
       export PYTHON_BINARY=python
-  fi
-- |
-  if [ -n "$TRAVIS_TAG" ]; then
-      pandoc README.md --to=rst > README.rst
   fi
 - $PYTHON_BINARY -m pip install .
 script: $PYTHON_BINARY tests/travis.py
