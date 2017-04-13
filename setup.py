@@ -1,6 +1,8 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
 
+if version_info[0] == 2:
+    FileNotFoundError = IOError
 try:
     with open("README.rst") as f:
         long_description = f.read()
