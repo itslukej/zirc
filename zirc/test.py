@@ -12,7 +12,7 @@ class TestCase(object):
             try:
                 event = Event(line)
                 print_("Parsed line '{0}'".format(line), flush=True)
-            except:
+            except Exception:
                 raise errors.InvalidLine(line)
 
             args = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]}
