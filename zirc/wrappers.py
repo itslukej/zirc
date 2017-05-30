@@ -66,7 +66,7 @@ class connection_wrapper(object):
         self.send("NOTICE {0} :{1}".format(user, message))
 
     def quit(self, message=""):
-        self.send("QUIT : {0}".format(message))
+        self.send("QUIT :{0}".format(message))
 
     def ctcp(self, user, message):
         self.send("PRIVMSG {0} :\x01{1}\x01\x01".format(user, message))
