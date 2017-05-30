@@ -14,18 +14,18 @@ class Sasl(object):
 
     def run(self, bot, args=None):
         if args is None:
-            mechanisms = ["external", "plain"]
+            mechanisms = ["EXTERNAL", "PLAIN"]
         else:
             mechanisms = args
         self.bot = bot
         bot.listen(self.on_authenticate, "authenticate")
         bot.listen(self.on_saslfailed, "saslfailed")
         bot.listen(self.on_saslsuccess, "saslsuccess")
-        if self.method in mechanisms:
             if self.method == "plain":
                 bot.send("AUTHENTICATE PLAIN")
             elif self.method == "external":
                 bot.send("AUTHENTICATE EXTERNAL")
+        if self.method.upper() in mechanisms:
             else:
                 raise SASLError("Not implemented yet")
         else:
