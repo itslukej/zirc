@@ -50,6 +50,7 @@ class Sasl(object):
             if not self.retries == 2:
                 self.bot.send("AUTHENTICATE PLAIN")
             else:
+                self.bot.send("CAP END")
                 raise SASLError("SASL authentication failed!")
 
     def on_saslsuccess(self, event):
