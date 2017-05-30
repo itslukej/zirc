@@ -21,11 +21,9 @@ class Sasl(object):
         bot.listen(self.on_authenticate, "authenticate")
         bot.listen(self.on_saslfailed, "saslfailed")
         bot.listen(self.on_saslsuccess, "saslsuccess")
-            if self.method == "plain":
-                bot.send("AUTHENTICATE PLAIN")
-            elif self.method == "external":
-                bot.send("AUTHENTICATE EXTERNAL")
         if self.method.upper() in mechanisms:
+            if self.method in ["plain", "external"]:
+                bot.send("AUTHENTICATE " + self.method.upper())
             else:
                 raise SASLError("Not implemented yet")
         else:
