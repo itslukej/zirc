@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
+from zirc import __version__
 
 with open("PyPi-README.rst") as f:
     long_description = f.read().replace("\r", "")
@@ -9,7 +10,7 @@ if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0
     exit(-1)
 
 setup(name='zirc',
-      version='1.2.6',
+      version=__version__,
       description='Python IRCP Library',
       long_description=long_description,
       url='https://github.com/itslukej/zirc',
