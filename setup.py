@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
 from os import name
-from zirc import __version__
 
 with open("PyPi-README.rst") as f:
     long_description = f.read().replace("\r", "")
@@ -15,7 +14,7 @@ if name == "nt" and version_info < (3, 0):
     requirements.append('win_inet_pton')
 
 setup(name='zirc',
-      version=__version__,
+      version='1.2.6',
       description='Python IRCP Library',
       long_description=long_description,
       url='https://github.com/itslukej/zirc',
