@@ -16,4 +16,4 @@ install:
   - "%PYTHON%\\python.exe -m pip install ."
 build: off
 test_script:
-  - "%PYTHON%\\python.exe setup.py tests\\travis.py"
+  - "%PYTHON%\\python.exe tests\\travis.py"
