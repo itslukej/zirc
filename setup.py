@@ -28,6 +28,7 @@ setup(name='zirc',
             'Development Status :: 5 - Production/Stable',
             'Intended Audience :: Developers',
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+            'Natural Language :: English',
             'Programming Language :: Python',
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3',
@@ -36,6 +37,8 @@ setup(name='zirc',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: Implementation :: CPython',
+            'Programming Language :: Python :: Implementation :: PyPy'
             'Topic :: Communications :: Chat :: Internet Relay Chat',
             'Topic :: Software Development :: Libraries :: Python Modules'
       ])
