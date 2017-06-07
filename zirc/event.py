@@ -1,5 +1,5 @@
 import six
-import os, json, sys
+import os, json
 
 irc_events = json.load(open(os.path.join(os.path.dirname(__file__), "resources", "events.json"), "r"))
 
@@ -43,15 +43,9 @@ class Event(object):
                 args = " ".join(raw[1:])
         if len(args1) > 0:
             if len(args) > 0:
-                if sys.version_info < 3:
-                    args = u"{0} :{1}".format(args, args1)
-                else:
-                    args = "{0} :{1}".format(args, args1)
+                args = six.text_type("{0} :{1}").format(args, args1)
             else:
-                if sys.version_info < 3:
-                    args = u":{0}".format(args1)
-                else:
-                    args = ":{0}".format(args1)
+                args = six.text_type(":{0}").format(args1)
         if args.startswith(":"):
             args = args.split(":", 1)
         else:
