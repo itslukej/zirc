@@ -43,9 +43,9 @@ class Event(object):
                 args = " ".join(raw[1:])
         if len(args1) > 0:
             if len(args) > 0:
-                args = "{0} :{1}".format(args, args1)
+                args = u"{0} :{1}".format(args, args1)
             else:
-                args = ":{0}".format(args1)
+                args = u":{0}".format(args1)
         if args.startswith(":"):
             args = args.split(":", 1)
         else:
