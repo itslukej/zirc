@@ -9,10 +9,6 @@ if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0
     stderr.write('zIRC requires Python 2.7 or 3.2 and higher')
     exit(-1)
 
-requirements = ['six', 'pysocks']
-if name == "nt" and version_info < (3, 0):
-    requirements.append('win_inet_pton')
-
 setup(name='zirc',
       version='1.2.6',
       description='Python IRCP Library',
@@ -22,7 +18,10 @@ setup(name='zirc',
       author_email='me+zirc@lukej.me',
       license='GNU',
       packages=find_packages(),
-      install_requires=requirements,
+      install_requires=['six', 'pysocks'],
+      extras_require={
+          ':sys_platform=="win32" and (python_version == "2.7" or python_version == "2.6")': ['win_inet_pton']
+      },
       include_package_data=True,
       zip_safe=False,
       classifiers=[
