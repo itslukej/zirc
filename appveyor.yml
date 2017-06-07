@@ -1,4 +1,6 @@
 environment:
+  irc_pass:
+    secure: yHonQxgOJfUvCjJEUJMpbg==
   matrix:
     - PYTHON: "C:\\Python27"
     - PYTHON: "C:\\Python33"
