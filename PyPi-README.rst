@@ -53,8 +53,7 @@ Github
     sudo pip install git+https://github.com/itslukej/zirc.git
     sudo pip3 install git+https://github.com/itslukej/zirc.git
 
-    Github will contain the latest bug fixes and improvements but
-    sometimes also "bad quality" code.
+**Github will contain the latest bug fixes and improvements but sometimes also "bad quality" code.**
 
 Features
 --------
