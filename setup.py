@@ -1,6 +1,5 @@
 from setuptools import setup, find_packages
 from sys import version_info, exit, stderr
-from os import name
 
 with open("PyPi-README.rst") as f:
     long_description = f.read().replace("\r", "")
