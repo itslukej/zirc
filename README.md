@@ -20,7 +20,7 @@ class Bot(zirc.Client):
         self.connect(self.config)
         self.start()
         
-    def on_privmsg(bot, event, irc):
+    def on_privmsg(self, event, irc):
         irc.reply(event, "It works!")
         #Or alternatively:
         #irc.privmsg(event.target, "It works!")
