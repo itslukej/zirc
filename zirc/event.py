@@ -1,5 +1,6 @@
 import six
 import os, json
+from . import database
 
 irc_events = json.load(open(os.path.join(os.path.dirname(__file__), "resources", "events.json"), "r"))
 
@@ -12,6 +13,7 @@ class Event(object):
         self.target = None
         self.arguments = []
         self.tags = []
+        self.channel = None
         args = ""
         args1 = ""
         if raw.startswith("@"):
@@ -57,6 +59,9 @@ class Event(object):
             self.arguments.append(args[1])
 
         self.text_type = irc_events.get(self.type, self.type).upper()
+        
+        if self.target is not None and self.target.startswith("#"):
+            self.channel = Channel(self)
 
     def __str__(self):
         tmpl = (
@@ -98,6 +103,13 @@ class NickMask(six.text_type):
         user = userhost.partition('@')[0]
         return user or None
 
+    @property
+    def account(self):
+        pass
+
     @classmethod
     def from_group(cls, group):
         return cls(group) if group else None
+
+class Channel(six.text_type):
+    pass
