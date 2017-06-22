@@ -89,6 +89,9 @@ class Client(object):
                     result = self.ctcp[ctcp_message]
                 self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
 
+        if event.type == "332":
+            self.userdb[event.target]["topic"] = " ".join(event.arguments)
+
     # Basic client use
     def privmsg(self, channel, message, background=None, rainbow=False, style=None):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
