@@ -9,17 +9,17 @@ import zirc, ssl
 class Bot(zirc.Client):
     def __init__(self):
         self.connection = zirc.Socket(wrapper=ssl.wrap_socket)
-        self.config = zirc.IRCConfig(host="irc.freenode.net", 
+        self.config = zirc.IRCConfig(host="irc.freenode.net",
             port=6697,
             nickname="zirctest",
             ident="bot",
             realname="test bot",
             channels=["##chat"],
             caps=zirc.Caps(zirc.Sasl(username="username", password="password")))
-        
+
         self.connect(self.config)
         self.start()
-        
+
     def on_privmsg(self, event, irc):
         irc.reply(event, "It works!")
         #Or alternatively:
