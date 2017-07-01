@@ -1,7 +1,7 @@
 Internet Relay Chat (IRC) Protocol client library
 =================================================
 
-|Build Status| |Snippets Count|
+|Build Status| |Snippets Stats|
 
 Quick Start
 -----------
@@ -113,5 +113,5 @@ library before merging to the master branch. Change the version in
 
 .. |Build Status| image:: https://travis-ci.org/itslukej/zirc.svg?branch=master
    :target: https://travis-ci.org/itslukej/zirc
-.. |Snippets Count| image:: https://codebottle.io/api/v1/embed/searchbadge.php?keywords=%22zirc%22&language=Python
-   :target: https://codebottle.io/?q=%22zirc%22
+.. |Snippets Stats| image:: https://codebottle.io/embed/search-badge?keywords=zirc&language=4
+   :target: https://codebottle.io/?q=zirc
