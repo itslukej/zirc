@@ -19,7 +19,7 @@ setup(name='zirc',
       packages=find_packages(),
       install_requires=['six', 'pysocks'],
       extras_require={
-          ':sys_platform=="win32" and (python_version == "2.7" or python_version == "2.6")': ['win_inet_pton']
+          ':sys_platform=="win32" and python_version == "2.7"': ['win_inet_pton']
       },
       python_requires='>=2.7,!=3.0.*,!=3.1.*',
       include_package_data=True,
