@@ -31,11 +31,11 @@ notifications:
     on_failure: always
 deploy:
   provider: pypi
+  distributions: sdist bdist_wheel
   user: Eclipse11
   password:
     secure: VOt6z1fziPzUOG1N+8gCn4fQDxPcduERr7QdTU+y0OLYg8RVm0e5h7rSgGZ+q2z16jDsEYOWB7Ml2l+Xxz/G49Xet12THm0BDzH333QtMgMvj0Kp4oFlXmLr37rg36uoYq6gFLjzNN2HUZ9Y2gTd8wwk41Sxmk4S2oq0TbpvtWhc1SSCogWTq/BijXmQlC3xBRVX4cls+Rr7TQHdzwFEXZrsR819Auugkrt9tVf6j9FjPJh5SAUMLVcexNDa9nYmSYtS4N7PPN6jqJ9/MJDnAJAgl8I2xpAARKPLU/gJjFJLdvdUl+BFoFsnJCvfEtqFmUoH01LKVTDlOr6ZyP3kDtJe5s5FQg2gxtpHF6AZhc4ZuTphd5ZS0BftNXAmO3Ya3bQnH0oB3Llc7rTOVzy8BHUr9o/JCVxF0w/6RW+3xt9bhuyLaOJx6YDkbEpcvbo9I5FHRdkNaoDjWpa/yhsUhZl7U8K6T2c83HWEDYcpBO06oOOoQceewBO3c+JaR6lrUjr4hbncnC4PcSWYjOc7axzfFoKkRbdXhyIPQtb2lV4hyeA4OAp3dVc5mjf8jZO1lVuEQtEKfdN2pxjCJW/Elc3KY404gN3kyl2GLdIyBzbe9n+dPM/2J/1ksQKEObbbWmcSm/P2KuuQmmtntFUsLddA9eKdX2Yik/T59ZZAyp8=
   on:
-    distributions: sdist bdist_wheel
     repo: itslukej/zirc
     tags: true
 env:
