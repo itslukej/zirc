@@ -1,3 +1,4 @@
+import time
 from string import Template
 from .flood import floodProtect
 from .loop import EventLoop
@@ -77,7 +78,12 @@ class Client(object):
             util.function_argument_call(call_func, args)()
 
         if event.type == "PING":
+            self.lastping = time.time()
             self.send("PONG :{0}".format(" ".join(event.arguments)))
+
+        if (self.lastping % 60) + 10 > (time.time() % 60) + 10:
+            self.socket.close()
+            self.connect()
 
         # CTCP Replies
         if event.type == "PRIVMSG" and " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
