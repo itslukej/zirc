@@ -55,6 +55,7 @@ class Client(object):
         args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
 
         if event.type == "001":
+            self.lastping = time.time()
             for channel in self._channels:
                 self.send("JOIN {0}".format(channel))
 
@@ -81,7 +82,7 @@ class Client(object):
             self.lastping = time.time()
             self.send("PONG :{0}".format(" ".join(event.arguments)))
 
-        if (self.lastping % 60) + 10 > (time.time() % 60) + 10:
+        if (self.lastping % 60) + 100 > (time.time() % 60) + 100:
             self.socket.close()
             self.connect()
 
