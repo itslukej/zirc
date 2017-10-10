@@ -7,7 +7,9 @@ from . import util
 from .wrappers import connection_wrapper
 
 class Client(object):
-    listeners = []
+    def __init__(self):
+        self.listeners = []
+        self.lastping = time.time()
 
     def connect(self, config_class=None, keyfile=None, certfile=None):
 
