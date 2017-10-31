@@ -22,3 +22,6 @@ class TestError(Exception):
 
 class InvalidLine(TestError):
     pass
+
+class DependencyError(Warning):
+    pass

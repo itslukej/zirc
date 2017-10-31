@@ -19,4 +19,7 @@ try:
             self.set_proxy(self.protocol, self.host, self.port)
             return self
 except ImportError:
-    raise ImportError('To use proxy features with zIRC, we require that PySocks be installed')
+    from .. import errors
+    def x(*args, **kwargs):
+        raise errors.DependencyError('To use proxy features with zIRC, we require that PySocks be installed')
+    SOCKS5 = SOCKS4 = HTTP = Proxy = x
