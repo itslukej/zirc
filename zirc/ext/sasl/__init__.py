@@ -2,7 +2,7 @@
 
 import base64
 import pyxmpp2_scram as scram
-from ..errors import SASLError
+from ...errors import SASLError
 
 class Sasl(object):
     name = "sasl"
@@ -28,7 +28,7 @@ class Sasl(object):
                 step = self.sasl_scram_state['step']
                 try:
                     if step == 'uninitialized':
-                        hash_name = self.mechanism[len('scram-'):]
+                        hash_name = self.method[len('scram-'):]
                         if hash_name.endswith('-plus'):
                             hash_name = hash_name[:-len('-plus')]
                         hash_name = hash_name.upper()
@@ -38,8 +38,8 @@ class Sasl(object):
                         authenticator = scram.SCRAMClientAuthenticator(hash_name, channel_binding=False)
                         self.sasl_scram_state['authenticator'] = authenticator
                         client_first = authenticator.start({
-                            'username': self.sasl_username,
-                            'password': self.sasl_password,
+                            'username': self.username,
+                            'password': self.password,
                          })
                         self.sendSaslString(client_first)
                         self.sasl_scram_state['step'] = 'first-sent'
