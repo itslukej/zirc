@@ -1,5 +1,6 @@
 # SASL authentication for zirc
 
+from sys import version_info
 import base64
 from . import scram
 from ...errors import SASLError
@@ -16,7 +17,10 @@ class Sasl(object):
 
     def run(self, bot, args=None):
         if args is None:
-            mechanisms = ["SCRAM-SHA256-PLUS", "SCRAM-SHA256", "EXTERNAL", "PLAIN"]
+            mechanisms = ["EXTERNAL", "PLAIN"]
+            if version_info[0] == 3 and not version_info[1] == 2:
+                mechanisms.insert(0, "SCRAM-SHA256-PLUS")
+                mechanisms.insert(1, "SCRAM-SHA256")
         else:
             mechanisms = args
         self.bot = bot
