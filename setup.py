@@ -17,7 +17,7 @@ setup(name='zirc',
       author_email='me+zirc@lukej.me',
       license='GNU',
       packages=find_packages(),
-      install_requires=['six'],
+      install_requires=['six', 'pyxmpp2_scram'],
       extras_require={
           'pysocks': ['pysocks'],
           'pysocks:sys_platform=="win32" and python_version == "2.7"': ['win_inet_pton']
