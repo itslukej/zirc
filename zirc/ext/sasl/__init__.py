@@ -1,7 +1,7 @@
 # SASL authentication for zirc
 
 import base64
-import pyxmpp2_scram as scram
+from . import scram
 from ...errors import SASLError
 
 class Sasl(object):
@@ -28,37 +28,16 @@ class Sasl(object):
                 step = self.sasl_scram_state['step']
                 try:
                     if step == 'uninitialized':
-                        hash_name = self.method[len('scram-'):]
-                        if hash_name.endswith('-plus'):
-                            hash_name = hash_name[:-len('-plus')]
-                        hash_name = hash_name.upper()
-                        if hash_name not in scram.HASH_FACTORIES:
-                            self.retries += 2
-                            return
-                        authenticator = scram.SCRAMClientAuthenticator(hash_name, channel_binding=False)
-                        self.sasl_scram_state['authenticator'] = authenticator
-                        client_first = authenticator.start({
-                            'username': self.username,
-                            'password': self.password,
-                         })
-                        self.sendSaslString(client_first)
-                        self.sasl_scram_state['step'] = 'first-sent'
+                        scram.doAuthenticateScramFirst(self, method)
                     elif step == 'first-sent':
-                        client_final = self.sasl_scram_state['authenticator'].challenge(challenge)
-                        self.sendSaslString(client_final)
-                        self.sasl_scram_state['step'] = 'final-sent'
+                        scram.doAuthenticateScramChallenge(self, string)
                     elif step == 'final-sent':
-                        try:
-                            res = self.sasl_scram_state['authenticator'].finish(data)
-                        except scram.BadSuccessException:
-                            self.retries += 2
-                        else:
-                            self.sasl_scram_state['step'] = 'authenticated'
-                        else:
-                            assert False
-                    except scram.ScramException:
-                        bot.send('AUTHENTICATE *')
-                        self.retries +=  2
+                        scram.doAuthenticateScramFinish(self, string)
+                    else:
+                        assert False
+                except scram.ScramException:
+                    bot.send('AUTHENTICATE *')
+                    self.retries +=  2
             elif self.method in ["plain", "external"]:
                 bot.send("AUTHENTICATE " + self.method.upper())
             else:
