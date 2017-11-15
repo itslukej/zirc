@@ -26,7 +26,8 @@ def doAuthenticateScramChallenge(self, challenge):
 def doAuthenticateScramFinish(self, data):
     try:
         res = self.sasl_scram_state['authenticator'].finish(data)
-    except scram.BadSuccessException as e:
+    except scram.BadSuccessException:
         self.retries += 2
     else:
         self.sasl_scram_state['step'] = 'authenticated'
+        self.bot.send("AUTHENTICATE +")
