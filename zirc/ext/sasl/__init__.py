@@ -18,7 +18,7 @@ class Sasl(object):
     def run(self, bot, args=None):
         if args is None:
             mechanisms = ["EXTERNAL", "PLAIN"]
-            if version_info[0] == 3 and not version_info[1] == 2:
+            if not (version_info[0] == 3 and version_info[1] == 2):
                 mechanisms.insert(0, "SCRAM-SHA256-PLUS")
                 mechanisms.insert(1, "SCRAM-SHA256")
         else:
