@@ -8,21 +8,27 @@ class connection_wrapper(object):
         self.privmsg = irc.privmsg
 
     def ping(self):
-        self.send("PING :{}".format(int(time())))
+        """Send a PING to the connected server"""
+        self.send("PING :{0}".format(int(time())))
 
     def part(self, chan):
+        """Part a specified channel"""
         self.send("PART {0}".format(chan))
 
     def nick(self, nick):
+        """Change nickname to the one specified"""
         self.send("NICK {0}".format(nick))
 
     def join(self, chan, key=None):
+        """<channel> [<key>]
+        Joins specified channel"""
         if key:
             self.send("JOIN {0} {1}".format(chan, key))
         else:
             self.send("JOIN {0}".format(chan))
 
     def invite(self, chan, user):
+        """Invite user to a channel"""
         self.send("INVITE {0} {1}".format(user, chan))
 
     def action(self, channel, message):
