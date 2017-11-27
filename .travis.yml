@@ -1,30 +1,34 @@
-addons:
-  apt:
-    sources:
-    - pypy
-    packages:
-    - pypy
 language: python
-cache: pip
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $HOME/.pyenv
 python:
-- '2.7.13'
+- '2.7.14'
 - '3.2'
 - '3.3'
 - '3.4.5'
-- '3.5'
+- '3.5.4'
 - '3.6'
 - nightly
 - pypy
 install:
 - |
   if [ $TRAVIS_PYTHON_VERSION == "pypy" ]; then
-      export PYTHON_BINARY=pypy
-      $PYTHON_BINARY --version
-  else
-      export PYTHON_BINARY=python
+    export PYENV_ROOT="$HOME/.pyenv"
+    if [ -f "$PYENV_ROOT/bin/pyenv" ]; then
+      pushd "$PYENV_ROOT" && git pull && popd
+    else
+      rm -rf "$PYENV_ROOT" && git clone --depth 1 https://github.com/yyuu/pyenv.git "$PYENV_ROOT"
+    fi
+    export PYPY_VERSION="5.9.0"
+    "$PYENV_ROOT/bin/pyenv" install --skip-existing "pypy-$PYPY_VERSION"
+    virtualenv --python="$PYENV_ROOT/versions/pypy-$PYPY_VERSION/bin/python" "$HOME/virtualenvs/pypy-$PYPY_VERSION"
+    source "$HOME/virtualenvs/pypy-$PYPY_VERSION/bin/activate"
+    python --version
   fi
-- $PYTHON_BINARY -m pip install .
-script: $PYTHON_BINARY tests/travis.py
+- python -m pip install .
+script: python tests/travis.py
 notifications:
   email:
     on_success: never
