@@ -31,10 +31,12 @@ class Event(object):
             raw = raw.split(" ")
             self.source = raw[0]
             self.type = raw[1]
-            if len(raw) > 2:
+            if len(raw) > 2 and not self.type == "ACCOUNT":
                 self.target = raw[2]
             if len(raw) > 3:
                 args = " ".join(raw[3:])
+            if self.type == "ACCOUNT":
+                args = raw[2]
             self.source = NickMask(self.source)
         else:
             raw = raw.split(" ")
