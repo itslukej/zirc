@@ -83,9 +83,9 @@ class Client(object):
             self.lastping = time.time()
             self.send("PONG :{0}".format(" ".join(event.arguments)))
 
-        if (self.lastping % 60) + 100 > (time.time() % 60) + 100:
+        if self.lastping + 120 > time.time() + 120:
             self.socket.close()
-            self.connect()
+            self.connect(self.config)
 
         # CTCP Replies
         if event.type == "PRIVMSG" and " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
