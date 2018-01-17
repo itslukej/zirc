@@ -60,7 +60,7 @@ class connection_wrapper(object):
         self.send("MODE {0} +v {1}".format(channel, nick))
 
     def mode(self, channel, nick, mode):
-        self.send("MODE {0} {1} {2}".format(channel, nick, mode))
+        self.send("MODE {0} {1} {2}".format(channel, mode, nick))
 
     def notice(self, user, message):
         self.send("NOTICE {0} :{1}".format(user, message))
