@@ -10,7 +10,7 @@ class Client(object):
     listeners = []
     lastping = time.time()
 
-    def connect(self, config_class=None, keyfile=None, certfile=None):
+    def connect(self, config_class, keyfile=None, certfile=None):
 
         self.fp = floodProtect()
         if not hasattr(self, "connection"):
