@@ -100,9 +100,8 @@ class Client(object):
     # Basic client use
     def privmsg(self, channel, message, background=None, rainbow=False, style=None, prefix=False):
         MSGLEN = 400 - len("PRIVMSG {} :\r\n".format(channel).encode())
-        strings = [message[i:i + MSGLEN] for i in range(0, len(message), MSGLEN)]
-        for message in strings:
-            msg = Template(message).safe_substitute(**util.colors.colors)
+        for i in range(0, len(message), MSGLEN):
+            msg = Template(message[i:i + MSGLEN]).safe_substitute(**util.colors.colors)
             if rainbow:
                 msg = util.colors.rainbow(msg)
             if prefix:
