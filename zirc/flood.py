@@ -6,18 +6,21 @@ class floodProtect(object):
     def __init__(self):
         self.irc_queue = []
         self.irc_queue_running = False
+        self.sleep_time = 1
+        self.lines = 1
 
     def queue_thread(self):
         while True:
-            try:
-                connection = self.irc_queue[0][0]
-                raw = self.irc_queue[0][1]
-                self.irc_queue.pop(0)
-            except Exception:
-                self.irc_queue_running = False
-                break
-            connection.send(raw)
-            sleep(1)
+            for i in range(0, self.lines):
+                try:
+                    connection = self.irc_queue[i][0]
+                    raw = self.irc_queue[i][1]
+                    self.irc_queue.pop(i)
+                except Exception:
+                    self.irc_queue_running = False
+                    break
+                connection.send(raw)
+            sleep(self.sleep_time)
 
     def queue_add(self, connection, raw):
         self.irc_queue.append([connection, raw])
