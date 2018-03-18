@@ -21,6 +21,7 @@ class floodProtect(object):
                     break
                 connection.send(raw)
                 sleep(self.sleep_time)
+            sleep(0.1) # Sleep here so we have an extra little buffer and so we can flush the queue
 
     def queue_add(self, connection, raw):
         self.irc_queue.append([connection, raw])
