@@ -53,9 +53,9 @@ def rainbow(string):
 def background(string, bg):
     c = string.find("\x03") != -1
     if c and bg is not None:
-        return "{0},{1}{2}".format(string[:3], colors[bg], string[3:])
+        return "{0},{1}{2}".format(string[:3], colors[bg][1:], string[3:])
     elif not c and bg is not None:
-        return "{0},{1}{2}\x0F".format(colors["black"], colors[bg], string)
+        return "{0},{1}{2}\x0F".format(colors["black"], colors[bg][1:], string)
     elif bg is None:
         return string
 
