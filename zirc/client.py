@@ -83,7 +83,7 @@ class Client(object):
             self.lastping = time.time()
             self.send("PONG :{0}".format(" ".join(event.arguments)))
 
-        if self.lastping + 120 > time.time() + 120:
+        if self.lastping + 120 < time.time():
             self.socket.close()
             self.connect(self.config)
 
