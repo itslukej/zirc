@@ -1,7 +1,8 @@
 import six
 import os, json
 
-irc_events = json.load(open(os.path.join(os.path.dirname(__file__), "resources", "events.json"), "r"))
+with open(os.path.join(os.path.dirname(__file__), "resources", "events.json"), "r") as f:
+    irc_events = json.load(f)
 
 class Event(object):
 
