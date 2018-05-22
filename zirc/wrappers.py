@@ -4,6 +4,7 @@ from .util import colors
 
 class connection_wrapper(object):
     def __init__(self, irc):
+        self._config = irc._config
         self.send = irc.send
         self.msg = self.privmsg
 
