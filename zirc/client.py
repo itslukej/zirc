@@ -82,16 +82,17 @@ class Client(object):
             self.lastping = time.time()
             self.send("PONG :{0}".format(" ".join(event.arguments)))
 
-        if self.lastping + 120 < time.time():
-            self.fp.irc_queue = []
-            self.socket.close()
-            keyfile = self.connection.keyfile
-            certfile = self.connection.certfile
-            self.connection = self.connection.__class__(wrapper=self.connection.wrapper,
-                                                        family=self.connection.family,
-                                                        socket_class=self.connection.socket_class,
-                                                        bind_address=self.connection.bind_address)
-            self.connect(self._config, keyfile=keyfile, certfile=certfile)
+        # This is experimental, doesn't work... It just spawns new connections
+        # if self.lastping + 120 < time.time():
+        #     self.fp.irc_queue = []
+        #     self.socket.close()
+        #     keyfile = self.connection.keyfile
+        #     certfile = self.connection.certfile
+        #     self.connection = self.connection.__class__(wrapper=self.connection.wrapper,
+        #                                                 family=self.connection.family,
+        #                                                 socket_class=self.connection.socket_class,
+        #                                                 bind_address=self.connection.bind_address)
+        #     self.connect(self._config, keyfile=keyfile, certfile=certfile)
 
         # CTCP Replies
         if event.type == "PRIVMSG" and " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
