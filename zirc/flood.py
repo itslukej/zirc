@@ -16,9 +16,7 @@ class floodProtect(object):
             if self.canburst:
                 for i in range(0, self.lines):
                     try:
-                        connection = self.irc_queue[i][0]
-                        raw = self.irc_queue[i][1]
-                        self.irc_queue.pop(i)
+                        connection, raw = self.irc_queue.pop(0)
                     except Exception:
                         self.irc_queue_running = False
                         break
@@ -28,9 +26,7 @@ class floodProtect(object):
                 self.canburst = False
             else:
                 try:
-                    connection = self.irc_queue[0][0]
-                    raw = self.irc_queue[0][1]
-                    self.irc_queue.pop(0)
+                    connection, raw = self.irc_queue.pop(0)
                 except Exception:
                     self.irc_queue_running = False
                     break
