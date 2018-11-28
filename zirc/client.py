@@ -95,14 +95,18 @@ class Client(object):
         #     self.connect(self._config, keyfile=keyfile, certfile=certfile)
 
         # CTCP Replies
-        if event.type == "PRIVMSG" and " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
-            ctcp_message = " ".join(event.arguments).replace("\x01", "").upper()
-            if ctcp_message in self.ctcp.keys():
-                if callable(self.ctcp[ctcp_message]):
-                    result = self.ctcp[ctcp_message]()
-                else:
-                    result = self.ctcp[ctcp_message]
-                self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
+        if event.type == "PRIVMSG":
+            if " ".join(event.arguments).startswith("\x01ACTION"):
+                event.type = "ACTION"
+                event.text_type = "ACTION"
+            elif " ".join(event.arguments).startswith("\x01") and hasattr(self, "ctcp"):
+                ctcp_message = " ".join(event.arguments).replace("\x01", "").upper()
+                if ctcp_message in self.ctcp.keys():
+                    if callable(self.ctcp[ctcp_message]):
+                        result = self.ctcp[ctcp_message]()
+                    else:
+                        result = self.ctcp[ctcp_message]
+                    self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
 
     def listen(self, func, event_name):
         self.listeners.append((event_name.lower(), func))
