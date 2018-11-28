@@ -23,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.whl
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -94,3 +95,6 @@ ENV/
 
 #Testing file
 .test.py
+
+# VSCode
+.vscode/
