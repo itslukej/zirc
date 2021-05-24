@@ -13,6 +13,7 @@ class Caps(object):
 
     def handler(self, event):
         servcaps = event.arguments[1].split(' ')
+        capsfunctions = [cap for cap in self.caps if hasattr(cap, "run")]
         if event.arguments[0] == "LS" and not self.done:
             for c in servcaps:
                 cap = c.split("=")[0]
@@ -28,11 +29,13 @@ class Caps(object):
             else:
                 self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
         elif event.arguments[0] == "ACK" and not self.done:
-            for cap in self.caps:
-                if hasattr(cap, "run"):
+            if len(capsfunctions):
+                for cap in capsfunctions:
                     if cap.name in servcaps:
                         cap.run(self.bot, args=self.args[cap.name])
-                self.done = True
+            else:
+                self.bot.send("CAP END")
+            self.done = True
         elif event.arguments[0] == "NEW":
             newcaps = []
             for c in self.stringcaps:
