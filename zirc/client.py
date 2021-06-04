@@ -4,6 +4,7 @@ from .loop import EventLoop
 from .errors import NoSocket, NoConfig
 from . import util
 from .wrappers import connection_wrapper
+import select
 
 class Client(object):
     listeners = []
@@ -19,6 +20,7 @@ class Client(object):
 
         self._config = config_class
         self.socket = self.connection((self._config["host"], self._config["port"]), keyfile=keyfile, certfile=certfile)
+        self.socket.setblocking(0)
 
         self._config["caps"](self)
 
@@ -32,16 +34,22 @@ class Client(object):
         self.loop = EventLoop(self.recv)
 
     def recv(self):
+        socket_list = [self.socket]
+        read_sockets, _, _ = select.select(socket_list, [], [])
         self.buffer = ""
-        while not self.buffer.endswith("\r\n"):
-            self.buffer += self.socket.recv(2048).decode("utf-8", errors="replace")
-        self.buffer = self.buffer.strip().split("\r\n")
+        for socket in read_sockets:
+            while not self.buffer.endswith("\r\n"):
+                self.buffer += socket.recv(2048).decode("utf-8", errors="replace")
+            self.buffer = self.buffer.strip().split("\r\n")
         return self.buffer
 
     def send(self, data):
         if hasattr(self, "on_send"):
             self.on_send(data)
-        self.fp.queue_add(self.socket, "{0}\r\n".format(data).encode("UTF-8"))
+        socket_list = [self.socket]
+        _, write_sockets, _ = select.select([], socket_list, [])
+        for socket in write_sockets:
+            self.fp.queue_add(socket, "{0}\r\n".format(data).encode("UTF-8"))
 
     def start(self):
         self.loop.create_job("main", self.main_job)
