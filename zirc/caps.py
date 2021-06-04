@@ -30,9 +30,11 @@ class Caps(object):
                 self.bot.send("CAP REQ :" + " ".join(self.availablecaps))
         elif event.arguments[0] == "ACK" and not self.done:
             if len(capsfunctions):
-                for cap in capsfunctions:
+                for (index, cap) in enumerate(capsfunctions, start=1):
                     if cap.name in servcaps:
                         cap.run(self.bot, args=self.args[cap.name])
+                    elif cap.name not in servcaps and index == len(capsfunctions):
+                        self.bot.send("CAP END")
             else:
                 self.bot.send("CAP END")
             self.done = True
