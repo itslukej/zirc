@@ -33,10 +33,10 @@ class floodProtect(object):
                         self.irc_queue_running = False
                         break
                     connection.send(raw)
-                    time.sleep(self.sleep_time)
+                    sleep(self.sleep_time)
             else:
                 burstdone = False
-            time.sleep(0.2)
+            sleep(0.2)
 
 
     def queue_add(self, connection, raw):
