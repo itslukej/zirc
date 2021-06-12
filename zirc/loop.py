@@ -24,8 +24,8 @@ class EventLoop(object):
                         util.function_argument_call(method["method"], {"line": line, "event": Event(line)}, method["thread"])()
                         self.current_job = None
                     self.cycles += 1
-            except KeyboardInterrupt:
-                break
+            except (KeyboardInterrupt, OSError) as e:
+                raise e
 
     def join(self):
         """returns None when the current job is complete"""
