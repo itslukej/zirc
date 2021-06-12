@@ -4,7 +4,13 @@ from .loop import EventLoop
 from .errors import NoSocket, NoConfig
 from . import util
 from .wrappers import connection_wrapper
+import socket as pysock
 import select
+from sys import exit
+try:
+    from .errors import ConnectionError
+except ImportError:
+    pass
 
 class Client(object):
     listeners = []
@@ -34,21 +40,34 @@ class Client(object):
         self.loop = EventLoop(self.recv)
 
     def recv(self):
-        socket_list = [self.socket]
-        read_sockets, _, _ = select.select(socket_list, [], [])
-        self.buffer = ""
-        for socket in read_sockets:
-            while not self.buffer.endswith("\r\n"):
-                self.buffer += socket.recv(2048).decode("utf-8", errors="replace")
-            self.buffer = self.buffer.strip().split("\r\n")
-        return self.buffer
+        try:
+            recv_sockets, _, _ = select.select([self.socket], [], [])
+            self.buffer = ""
+            if not len(recv_sockets):
+                self.loop.break_loop = True
+                self.fp.irc_queue = []
+                self.socket.close()
+                raise ConnectionError("The socket has unexpectedly closed")
+            for socket in recv_sockets:
+                while not self.buffer.endswith("\r\n"):
+                    self.buffer += socket.recv(2048).decode("utf-8", errors="replace")
+                self.buffer = self.buffer.strip().split("\r\n")
+            return self.buffer
+        except pysock.error:
+            self.fp.irc_queue = []
+            self.socket.close()
+            self.loop.break_loop = True
 
     def send(self, data):
         if hasattr(self, "on_send"):
             self.on_send(data)
-        socket_list = [self.socket]
-        _, write_sockets, _ = select.select([], socket_list, [])
-        for socket in write_sockets:
+        _, writable_sockets, _ = select.select([], [self.socket], [])
+        if not len(writable_sockets):
+                self.loop.break_loop = True
+                self.fp.irc_queue = []
+                self.socket.close()
+                raise ConnectionError("The socket has unexpectedly closed")
+        for socket in writable_sockets:
             self.fp.queue_add(socket, "{0}\r\n".format(data).encode("UTF-8"))
 
     def start(self):
