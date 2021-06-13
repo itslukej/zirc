@@ -1,7 +1,8 @@
 # SASL authentication for zirc
 
 import base64
-from ..errors import SASLError
+from . import scram
+from ...errors import SASLError
 
 class Sasl(object):
     name = "sasl"
@@ -11,10 +12,11 @@ class Sasl(object):
         self.password = password
         self.method = method
         self.retries = 0
+        self.sasl_scram_state = {'step': 'uninitialized'}
 
     def run(self, bot, args=None):
         if args is None:
-            mechanisms = ["EXTERNAL", "PLAIN"]
+            mechanisms = ["SCRAM-SHA256-PLUS", "SCRAM-SHA256", "EXTERNAL", "PLAIN"]
         else:
             mechanisms = args
         self.bot = bot
@@ -22,7 +24,7 @@ class Sasl(object):
         bot.listen(self.on_saslfailed, "saslfailed")
         bot.listen(self.on_saslsuccess, "saslsuccess")
         if self.method.upper() in mechanisms:
-            if self.method in ["plain", "external"]:
+            if self.method in ["scram-sha256-plus", "scram-sha256", "plain", "external"]:
                 bot.send("AUTHENTICATE " + self.method.upper())
             else:
                 raise SASLError("Not implemented yet")
@@ -35,12 +37,29 @@ class Sasl(object):
                 password = base64.b64encode("{0}\x00{0}\x00{1}".format(self.username, self.password).encode("UTF-8")).decode("UTF-8")
             elif self.method == 'external':
                 password = "+"
+            elif self.method.startswith('scram-sha'):
+                scram.doAuthenticateScramFirst(self, self.method)
             self.bot.send("AUTHENTICATE {0}".format(password))
+        else:
+            step = self.sasl_scram_state['step']
+            string = event.arguments[0]
+            try:
+                if step == 'first-sent':
+                    scram.doAuthenticateScramChallenge(self, string)
+                elif step == 'final-sent':
+                    scram.doAuthenticateScramFinish(self, string)
+                elif step == "authenticated":
+                    self.bot.send("AUTHENTICATE +")
+                else:
+                    assert False
+            except scram.ScramException:
+                bot.send('AUTHENTICATE *')
+                self.retries +=  2
 
     def on_saslfailed(self, event):
         self.retries += 1
         if self.method == 'external':
-            if self.retries == 2:
+            if self.retries >= 2:
                 self.retries = 1
                 self.method = 'plain'
                 self.bot.send("AUTHENTICATE PLAIN")
