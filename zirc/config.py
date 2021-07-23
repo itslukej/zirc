@@ -29,7 +29,7 @@ class IRCConfig(object):
                      }
         self.dict.update(c)
 
-    def sterilise(self, method: Callable[[IRCConfigDict]]):
+    def sterilise(self, method: Callable[[IRCConfigDict], Type[IRCConfigDict]]):
         return method(self.dict)
 
     def __getitem__(self, key: str) -> Union[str, int, Caps, list[str]]:
