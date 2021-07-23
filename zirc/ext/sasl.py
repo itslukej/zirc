@@ -1,7 +1,7 @@
 # SASL authentication for zirc
-
+from __future__ import annotations
 import base64
-from typing import List, Literal, Optional, TYPE_CHECKING, Type, Union
+from typing import List, Literal, Optional, TYPE_CHECKING, Type
 from .caps import BaseCaps
 from ..errors import SASLError
 if TYPE_CHECKING:

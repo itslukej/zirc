@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Dict, List, TYPE_CHECKING, Type, Union
 if TYPE_CHECKING:
     from .client import Client
