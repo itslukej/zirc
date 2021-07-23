@@ -1,3 +1,4 @@
+from __future__ import annotations
 import time
 from typing import Callable, List, Optional, Tuple, Type, TypedDict
 from zirc.connection import Socket
@@ -13,7 +14,7 @@ import select
 
 
 class Client(object):
-    listeners: List[Tuple[str, Callable]] = []
+    listeners: List[Tuple[str, Callable[[Type[Client], Event, connection_wrapper, List[str]], None]]] = []
     lastping = time.time()
     connection: Socket
 
