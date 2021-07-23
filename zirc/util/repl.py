@@ -1,20 +1,21 @@
 import code, sys
+from typing import Any, AnyStr, Mapping, Optional
 
 class Repl(code.InteractiveConsole):
     """Interractive Python Console class"""
-    def __init__(self, items=None):
+    def __init__(self, items: Optional[Mapping[str, Any]]=None):
         if items is None:
             items = {}
         code.InteractiveConsole.__init__(self, items)
         self._buffer = ""
 
-    def write(self, data):
+    def write(self, data: AnyStr):
         self._buffer += str(data)
 
     def flush(self):
         self._buffer = ""
 
-    def run(self, data):
+    def run(self, data: str):
         sys.stdout = self
         self.push(data)
         sys.stdout = sys.__stdout__

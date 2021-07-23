@@ -1,8 +1,3 @@
-import sys as _sys
-if _sys.version_info >= (2, 7, 0) and _sys.version_info < (3, 3):
-    class ConnectionError(OSError):
-        pass
-
 class IRCError(ConnectionError):
     pass
 

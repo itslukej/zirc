@@ -37,7 +37,7 @@ colors = {
 _rainbow = ["red", "orange", "yellow", "green", "blue", "navy", "violet"]
 
 
-def rainbow(string):
+def rainbow(string: str):
     i = 0
     colored = ""
 
@@ -50,7 +50,7 @@ def rainbow(string):
 
     return colored + "\x0F"
 
-def background(string, bg):
+def background(string: str, bg: str):
     c = string.find("\x03") != -1
     if c and bg is not None:
         return "{0},{1}{2}".format(string[:3], colors[bg][1:], string[3:])
@@ -59,7 +59,7 @@ def background(string, bg):
     elif bg is None:
         return string
 
-def stylize(string, style):
+def stylize(string: str, style: str):
     if style is not None:
         return "{0}{1}".format(colors[style.upper()], string)
     else:

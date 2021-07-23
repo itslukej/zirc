@@ -1,18 +1,24 @@
 # SASL authentication for zirc
 
 import base64
+from typing import List, Literal, Optional, TYPE_CHECKING, Type, Union
+from .caps import BaseCaps
 from ..errors import SASLError
+if TYPE_CHECKING:
+    from ..client import Client
+    from ..event import Event
 
-class Sasl(object):
+
+class Sasl(BaseCaps):
     name = "sasl"
 
-    def __init__(self, username, password, method="plain"):
+    def __init__(self, username: str, password: str, method: Optional[str]="plain"):
         self.username = username
         self.password = password
-        self.method = method
-        self.retries = 0
+        self.method: Literal['plain', 'external'] = method
+        self.retries: int = 0
 
-    def run(self, bot, args=None):
+    def run(self, bot: Type[Client], args: Optional[List[str]]=None):
         if args is None:
             mechanisms = ["EXTERNAL", "PLAIN"]
         else:
@@ -29,7 +35,7 @@ class Sasl(object):
         else:
             raise SASLError("Not supported by server")
 
-    def on_authenticate(self, event):
+    def on_authenticate(self, event: Event):
         if event.arguments[0] == "+":
             if self.method == 'plain':
                 password = base64.b64encode("{0}\x00{0}\x00{1}".format(self.username, self.password).encode("UTF-8")).decode("UTF-8")
@@ -37,7 +43,7 @@ class Sasl(object):
                 password = "+"
             self.bot.send("AUTHENTICATE {0}".format(password))
 
-    def on_saslfailed(self, event):
+    def on_saslfailed(self, event: Event):
         self.retries += 1
         if self.method == 'external':
             if self.retries == 2:
@@ -53,5 +59,5 @@ class Sasl(object):
                 self.bot.send("AUTHENTICATE *")
                 raise SASLError("SASL authentication failed!")
 
-    def on_saslsuccess(self, event):
+    def on_saslsuccess(self, event: Event):
         self.bot.send("CAP END")

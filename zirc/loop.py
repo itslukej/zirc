@@ -1,16 +1,17 @@
 from collections import OrderedDict
+from typing import Callable, List, Optional
 from . import util
 from .event import Event
 
 class EventLoop(object):
-    def __init__(self, recv_func):
-        self.jobs = OrderedDict()
-        self.cycles = 0
-        self.current_job = None
+    def __init__(self, recv_func: Callable[[], List[str]]):
+        self.jobs: OrderedDict[str, Callable[[Event]]] = OrderedDict()
+        self.cycles: int = 0
+        self.current_job: Optional[str] = None
         self.break_loop = False
         self.recv_func = recv_func
 
-    def create_job(self, name, method, do_thread=False):
+    def create_job(self, name: str, method: Callable[[Event]], do_thread: bool=False):
         self.jobs[name] = {"method": method, "thread": do_thread}
 
     def run(self):

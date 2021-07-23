@@ -1,10 +1,12 @@
+import socket
 from threading import Thread
 from time import sleep
+from typing import List, Tuple, Type
 
 class floodProtect(object):
 
     def __init__(self):
-        self.irc_queue = []
+        self.irc_queue: List[Tuple[Type[socket.socket], bytes]] = []
         self.irc_queue_running = False
         self.sleep_time = 1
         self.lines = 1
@@ -39,7 +41,7 @@ class floodProtect(object):
             sleep(0.2)
 
 
-    def queue_add(self, connection, raw):
+    def queue_add(self, connection: Type[socket.socket], raw: bytes):
         self.irc_queue.append([connection, raw])
         if getattr(self, 'queuet', None) is None:
             self.irc_queue_running = True
@@ -47,7 +49,7 @@ class floodProtect(object):
             self.queuet.daemon = True
             self.queuet.start()
 
-    def queue_add_first(self, connection, raw):
+    def queue_add_first(self, connection: Type[socket.socket], raw: bytes):
         self.irc_queue = [[connection, raw]] + self.irc_queue
         if getattr(self, 'queuet', None) is None:
             self.irc_queue_running = True

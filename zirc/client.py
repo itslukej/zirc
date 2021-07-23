@@ -1,4 +1,7 @@
 import time
+from typing import Callable, Dict, List, Optional, Tuple, Type, TypedDict, Union
+from .event import Event
+from .config import IRCConfig
 from .flood import floodProtect
 from .loop import EventLoop
 from .errors import NoSocket, NoConfig
@@ -6,17 +9,13 @@ from . import util
 from .wrappers import connection_wrapper
 import socket as pysock
 import select
-from sys import exit
-try:
-    from .errors import ConnectionError
-except ImportError:
-    pass
+
 
 class Client(object):
-    listeners = []
+    listeners: List[Tuple[str, Callable]] = []
     lastping = time.time()
 
-    def connect(self, config_class=None, keyfile=None, certfile=None):
+    def connect(self, config_class: IRCConfig=None, keyfile: Optional[str]=None, certfile:Optional[str]=None):
 
         self.fp = floodProtect()
         if not hasattr(self, "connection"):
@@ -25,8 +24,8 @@ class Client(object):
             raise NoConfig("config_class not a argument when calling connect")
 
         self._config = config_class
-        self.socket = self.connection((self._config["host"], self._config["port"]), keyfile=keyfile, certfile=certfile)
-        self.socket.setblocking(0)
+        self.socket: Type[pysock.socket] = self.connection((self._config["host"], self._config["port"]), keyfile=keyfile, certfile=certfile)
+        self.socket.settimeout(240)
 
         self._config["caps"](self)
 
@@ -36,12 +35,12 @@ class Client(object):
         self.send("NICK {0}".format(self._config["nickname"]))
         self.send("USER {0} * * :{1}".format(self._config["ident"], self._config["realname"]))
 
-        self._channels = self._config["channels"]
+        self._channels: list[str] = self._config["channels"]
         self.loop = EventLoop(self.recv)
 
     def recv(self):
         try:
-            recv_sockets, _, _ = select.select([self.socket], [], [])
+            recv_sockets: List[Type[pysock.socket]] = select.select([self.socket], [], [])[0]
             self.buffer = ""
             if not len(recv_sockets):
                 self.loop.break_loop = True
@@ -58,7 +57,7 @@ class Client(object):
             self.socket.close()
             self.loop.break_loop = True
 
-    def send(self, data):
+    def send(self, data: str):
         if hasattr(self, "on_send"):
             self.on_send(data)
         _, writable_sockets, _ = select.select([], [self.socket], [])
@@ -74,9 +73,9 @@ class Client(object):
         self.loop.create_job("main", self.main_job)
         self.loop.run()
 
-    def main_job(self, event):
+    def main_job(self, event: Event):
         """loop job to provide a event based system for clients."""
-        args = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]}
+        args: EventHandlerArgs = {"event": event, "bot": self, "irc": connection_wrapper(self), "args": " ".join(event.arguments).split(" ")[1:]}
 
         # add arguments from event, for easier access
         args.update({k: getattr(event, k) for k in dir(event) if not k.startswith("__") and not k.endswith("__")})
@@ -86,17 +85,17 @@ class Client(object):
             for channel in self._channels:
                 self.send("JOIN {0}".format(channel))
 
-        to_call = []
+        to_call: List[Callable[[Type[Client], Event, connection_wrapper, List[str]], None]] = []
 
         if hasattr(self, "on_all"):
             to_call.append(self.on_all)
 
-        if hasattr(self, "on_" + event.type.lower()):
-            to_call.append(getattr(self, "on_" + event.type.lower()))
+        if hasattr(self, f"on_{event.type.lower()}"):
+            to_call.append(getattr(self, f"on_{event.type.lower()}"))
 
         if event.type != event.text_type:
-            if hasattr(self, "on_" + event.text_type.lower()):
-                to_call.append(getattr(self, "on_" + event.text_type.lower()))
+            if hasattr(self, f"on_{event.text_type.lower()}"):
+                to_call.append(getattr(self, f"on_{event.text_type.lower()}"))
 
         for event_name, func in self.listeners:
             if event_name == event.text_type.lower() or event_name == event.type.lower():
@@ -135,5 +134,13 @@ class Client(object):
                         result = self.ctcp[ctcp_message]
                     self.send("NOTICE {0} :{1} {2}".format(event.source.nick, ctcp_message, result))
 
-    def listen(self, func, event_name):
+    def listen(self, func: Callable[[Type[Client], Event, connection_wrapper, List[str]], None], event_name: str):
         self.listeners.append((event_name.lower(), func))
+
+
+class EventHandlerArgs(TypedDict):
+    event: Event
+    self: Type[Client]
+    irc: connection_wrapper
+    args: List[str]
+

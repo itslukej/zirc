@@ -10,7 +10,7 @@ class TokenBucket(object):
     False
     """
 
-    def __init__(self, tokens, fill_rate):
+    def __init__(self, tokens: float, fill_rate: float):
         """tokens is the total tokens in the bucket. fill_rate is the
         rate in tokens/second that the bucket will be refilled."""
         self.capacity = float(tokens)
@@ -18,7 +18,7 @@ class TokenBucket(object):
         self.fill_rate = float(fill_rate)
         self.timestamp = time()
 
-    def consume(self, tokens):
+    def consume(self, tokens: float):
         """Consume tokens from the bucket. Returns True if there were
         sufficient tokens otherwise False."""
         if tokens <= self.tokens:

@@ -1,19 +1,26 @@
+from typing import Dict, List, TYPE_CHECKING, Type, Union
+if TYPE_CHECKING:
+    from .client import Client
+    from .event import Event
+    from .ext.caps import BaseCaps
+
+
 class Caps(object):
     def __init__(self, *args):
-        self.caps = list(args)
-        self.availablecaps = []
-        self.stringcaps = []
+        self.caps: List[Union[str, Type[BaseCaps]]] = list(args)
+        self.availablecaps: List[str] = []
+        self.stringcaps: List[str] = []
         self.done = False
-        self.args = {}
+        self.args: Dict[str, List[str]] = {}
         for cap in self.caps:
             if not isinstance(cap, str):
                 self.stringcaps.append(cap.name)
             else:
                 self.stringcaps.append(cap)
 
-    def handler(self, event):
+    def handler(self, event: Event):
         servcaps = event.arguments[1].split(' ')
-        capsfunctions = [cap for cap in self.caps if hasattr(cap, "run")]
+        capsfunctions = [cap for cap in self.caps if not isinstance(cap, str) and hasattr(cap, "run")]
         if event.arguments[0] == "LS" and not self.done:
             for c in servcaps:
                 cap = c.split("=")[0]
@@ -56,7 +63,7 @@ class Caps(object):
                     self.stringcaps.remove(c)
                     del self.caps[index]
 
-    def run(self, bot):
+    def run(self, bot: Client):
         self.bot = bot
         self.bot.listen(self.handler, "cap")
         self.bot.send("CAP LS 302")

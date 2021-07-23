@@ -4,8 +4,8 @@ from sys import version_info, exit, stderr
 with open("PyPi-README.rst") as f:
     long_description = f.read().replace("\r", "")
 
-if version_info < (2, 7, 0) or (version_info[0] == 3 and version_info < (3, 2, 0)):
-    stderr.write('zIRC requires Python 2.7 or 3.2 and higher')
+if version_info < (3, 5, 0):
+    stderr.write('zIRC requires Python 3.4 and higher')
     exit(-1)
 
 setup(name='zirc',
@@ -17,12 +17,10 @@ setup(name='zirc',
       author_email='me+zirc@lukej.me',
       license='GNU',
       packages=find_packages(),
-      install_requires=['six'],
       extras_require={
           'pysocks': ['pysocks'],
-          'pysocks:sys_platform=="win32" and python_version == "2.7"': ['win_inet_pton']
       },
-      python_requires='>=2.7,!=3.0.*,!=3.1.*',
+      python_requires='>=3.5',
       include_package_data=True,
       zip_safe=False,
       classifiers=[
@@ -31,13 +29,11 @@ setup(name='zirc',
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
             'Natural Language :: English',
             'Programming Language :: Python',
-            'Programming Language :: Python :: 2.7',
-            'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.2',
-            'Programming Language :: Python :: 3.3',
-            'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8'
+            'Programming Language :: Python :: 3.9'
             'Programming Language :: Python :: Implementation :: CPython',
             'Programming Language :: Python :: Implementation :: PyPy',
             'Topic :: Communications :: Chat :: Internet Relay Chat',

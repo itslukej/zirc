@@ -1,7 +1,8 @@
 import inspect, threading
+from typing import Any, Callable, Dict, Optional
 from . import colors
 
-def function_argument_call(func, arguments, do_thread=True):
+def function_argument_call(func: Callable, arguments: Dict[str, Any], do_thread: Optional[bool]=True):
     try:
         accepts = inspect.getargspec(func)[0]
     except TypeError:

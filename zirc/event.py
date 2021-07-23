@@ -1,18 +1,50 @@
-import six
 import os, json
+from typing import Any, Dict, List, Optional, Union
 
 with open(os.path.join(os.path.dirname(__file__), "resources", "events.json"), "r") as f:
-    irc_events = json.load(f)
+    irc_events: Dict[str, str] = json.load(f)
+
+class NickMask(str):
+    @classmethod
+    def from_params(cls, nick: str, user: str, host: str):
+        return cls('{nick}!{user}@{host}'.format(nick, user, host))
+
+    @property
+    def nick(self):
+        nick = self.partition("!")[0]
+        return nick
+
+    @property
+    def userhost(self):
+        userhost = self.partition("!")[2]
+        return userhost or None
+
+    @property
+    def host(self):
+        userhost = self.partition("!")[2]
+        host = userhost.partition('@')[2]
+        return host or None
+
+    @property
+    def user(self):
+        userhost = self.partition("!")[2]
+        user = userhost.partition('@')[0]
+        return user or None
+
+    @classmethod
+    def from_group(cls, group: Optional[Any]):
+        return cls(group) if group else None
+
 
 class Event(object):
 
-    def __init__(self, raw):
+    def __init__(self, raw: str):
         self.raw = ''.join([i if ord(i) < 128 else ' ' for i in raw])
-        self.source = None
-        self.type = None
-        self.target = None
-        self.arguments = []
-        self.tags = []
+        self.source: Optional[NickMask] = None
+        self.type: str = None
+        self.target: str = None
+        self.arguments: List[str] = []
+        self.tags: List[Union[str, Dict[str, str]]] = []
         args = ""
         args1 = ""
         if raw.startswith("@"):
@@ -46,9 +78,9 @@ class Event(object):
                 args = " ".join(raw[1:])
         if len(args1) > 0:
             if len(args) > 0:
-                args = six.text_type("{0} :{1}").format(args, args1)
+                args = "{0} :{1}".format(args, args1)
             else:
-                args = six.text_type(":{0}").format(args1)
+                args = ":{0}".format(args1)
         if args.startswith(":"):
             args = args.split(":", 1)
         else:
@@ -73,34 +105,3 @@ class Event(object):
         )
         return tmpl.format(**vars(self))
     __repr__ = __str__
-
-class NickMask(six.text_type):
-    @classmethod
-    def from_params(cls, nick, user, host):
-        return cls('{nick}!{user}@{host}'.format(**vars()))
-
-    @property
-    def nick(self):
-        nick = self.partition("!")[0]
-        return nick
-
-    @property
-    def userhost(self):
-        userhost = self.partition("!")[2]
-        return userhost or None
-
-    @property
-    def host(self):
-        userhost = self.partition("!")[2]
-        host = userhost.partition('@')[2]
-        return host or None
-
-    @property
-    def user(self):
-        userhost = self.partition("!")[2]
-        user = userhost.partition('@')[0]
-        return user or None
-
-    @classmethod
-    def from_group(cls, group):
-        return cls(group) if group else None
