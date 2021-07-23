@@ -1,5 +1,6 @@
 import time
-from typing import Callable, Dict, List, Optional, Tuple, Type, TypedDict, Union
+from typing import Callable, List, Optional, Tuple, Type, TypedDict
+from zirc.connection import Socket
 from .event import Event
 from .config import IRCConfig
 from .flood import floodProtect
@@ -14,6 +15,7 @@ import select
 class Client(object):
     listeners: List[Tuple[str, Callable]] = []
     lastping = time.time()
+    connection: Socket
 
     def connect(self, config_class: IRCConfig=None, keyfile: Optional[str]=None, certfile:Optional[str]=None):
 
